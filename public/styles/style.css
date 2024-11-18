@@ -12,6 +12,11 @@ body {
   font-family: 'Arial', sans-serif;
   background-color: #f8f5ec; 
   color: #333;
+  background-image: url('/img/plume.jpg'); /* Chemin de votre image */
+  background-size: cover; /* L'image occupe toute la fenêtre */
+  background-repeat: no-repeat; /* Empêche la répétition de l'image */
+  background-attachment: fixed; /* Garde l'image fixe lors du défilement */
+  background-position: center; /* Centre l'image dans la fenêtre */
 }
 
 body.loaded .poem-container {
@@ -87,7 +92,29 @@ header h1 {
   padding: 2rem;
   transition: all 0.5s ease;
   z-index: 1000;
-  overflow-y: auto;
+  overflow-y: hidden;
+}
+
+/* Style pour la barre de défilement */
+#poemList::-webkit-scrollbar {
+  width: 10px; /* Largeur de la scrollbar */
+  border-radius: 10px; /* Arrondir les bords de la scrollbar */
+}
+
+#poemList::-webkit-scrollbar-track {
+  background: #f8f5ec; /* Couleur douce pour l'arrière-plan de la scrollbar */
+  border-radius: 10px; /* Arrondir les bords de la piste */
+}
+
+#poemList::-webkit-scrollbar-thumb {
+  background: #2C3E50; /* Couleur marron pour correspondre à l'esthétique générale */
+  border-radius: 10px; /* Coins arrondis pour un style cohérent */
+  border: 2px solid #f8f5ec; /* Ajouter un contour pour un effet contrasté */
+}
+
+/* Hover effect on the scrollbar thumb */
+#poemList::-webkit-scrollbar-thumb:hover {
+  background: #e1e6eb; /* Accentuer la couleur au survol */
 }
 
 .sidebar-title{
@@ -120,12 +147,14 @@ header h1 {
 input[type="text"] {
   width: 70%;
   padding: 0.5rem 1rem;
-  border: 2px solid #8B5E3C; /* Marron pour l'harmonie */
-  border-radius: 25px; /* Coins arrondis élégants */
+  border: 1px solid #8B5E3C; /* Marron pour l'harmonie */
+  border-radius: 5px; /* Coins arrondis élégants */
+  background-color: #fdf8f2;
   font-size: 1rem;
   font-family: 'Georgia', serif;
   color: #2C3E50;
   background-color: #f8f5ec;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease-in-out;
 }
 
@@ -133,7 +162,7 @@ input[type="text"] {
 input[type="text"]:focus {
   outline: none;
   border-color: #2C3E50; /* Une couleur plus vive au focus */
-  box-shadow: 0 0 10px rgba(207, 136, 69, 0.5); /* Glow élégant */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);/* Glow élégant */
   background-color: #fff;
 }
 
@@ -141,10 +170,20 @@ input[type="text"]:focus {
   left: 0;
 }
 
+.sidebar.open > #poemList {
+  left: 0;
+  overflow-y: auto;
+}
+
+#poemList {
+  height: 350px;
+  overflow-y: hidden;
+}
+
 /* Liste des poèmes */
 .sidebar ul {
   list-style: none;
-  padding: 0;
+  padding: 10px;
   margin-top: 3rem; /* Espace pour le bouton */
 }
 
@@ -221,6 +260,21 @@ input[type="text"]:focus {
   right: 270px !important;
 }
 
+/* Animation de zoom-in */
+@keyframes zoomIn {
+  0% {
+      transform: scale(0.5); /* Taille réduite au début */
+      opacity: 0; /* Invisible au début */
+  }
+  50% {
+      opacity: 0.5; /* Apparition progressive */
+  }
+  100% {
+      transform: scale(1); /* Taille normale à la fin */
+      opacity: 1; /* Complètement visible */
+  }
+}
+
 /* Bouton burger */
 .burger-menu {
   font-size: 2rem;
@@ -228,11 +282,13 @@ input[type="text"]:focus {
   border: none;
   color: white;
   cursor: pointer;
+  animation: zoomIn 3s ease-in-out;
   transition: transform 0.3s ease;
   position: absolute;
   right: 2px;
   transition: all 0.5s ease;
   z-index: 1;
+  transform-origin: center;
 }
 
 .burger-menu:hover {
@@ -349,21 +405,7 @@ h1 {
 .poem-container:hover .poem-text {
   transform: translateY(0);
 }
-  
-.download-btn {
-  display: inline-block;
-  margin-top: 1rem;
-  padding: 0.5rem 1rem;
-  background-color: #f3a953; /* Ton orange pour contraster.*/
-  color: #fff;
-  text-decoration: none;
-  border-radius: 5px;
-  transition: background-color 0.3s ease;
-}
-  
-.download-btn:hover {
-  background-color: #cf8845;
-}
+
   
 footer {
   background-color: #2C3E50;
@@ -384,7 +426,7 @@ footer {
   justify-content: center;
   align-items: center;
   animation: fadeIn 0.5s ease-in-out;
-  z-index: 10;
+  z-index: 1001;
 }
 
 /* Animation keyframes */
@@ -554,7 +596,7 @@ footer {
   }
 
   #sidebar {
-    mask-image: linear-gradient(to top, transparent 5%, black 75%);
+    mask-image: linear-gradient(to top, transparent 5%, black 95%);
   }
 
   .burger-menu {

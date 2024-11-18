@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
         effect: 'cube', // Active l'effet cube
         cubeEffect: {
           shadow: true,
-          slideShadows: true,
+          slideShadows: false,
           shadowOffset: 20,
           shadowScale: 0.94,
         },
