@@ -31,6 +31,29 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalText = document.getElementById('modal-text');
     const modalClose = document.getElementById('modal-close');
     const poemContainers = document.querySelectorAll('.poem-container');
+    const clearButton = document.getElementById('clear-button');
+    const modalContent = document.querySelector('.modal-content');
+
+
+    // Affiche ou masque la croix en fonction du contenu de l'input
+    searchInput.addEventListener('input', () => {
+        if (searchInput.value.trim() !== '') {
+          clearButton.style.display = 'inline';
+        } else {
+          clearButton.style.display = 'none';
+        }
+    });
+
+    // Efface le contenu de l'input au clic sur la croix
+    clearButton.addEventListener('click', () => {
+        searchInput.value = '';
+        clearButton.style.display = 'none';
+        searchInput.focus(); // Replace le focus dans l'input
+        let query = searchInput.value.toLowerCase();
+        poems.forEach(poem => {
+            poem.style.display = poem.textContent.toLowerCase().includes(query) ? '' : 'none';
+        });
+    });
 
     // Fonction pour basculer la barre latérale
     toggleButton.addEventListener('click', () => {
@@ -82,5 +105,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // Fermer la modale
     modalClose.addEventListener('click', () => {
         modal.classList.remove('show');
+    });
+
+    modal.addEventListener('click', (event) => {
+        if (!modalContent.contains(event.target)) {
+            modal.classList.remove('show');
+        }
     });
 });

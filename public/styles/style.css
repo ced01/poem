@@ -12,7 +12,7 @@ body {
   font-family: 'Arial', sans-serif;
   background-color: #f8f5ec; 
   color: #333;
-  background-image: url('/img/plume.jpg'); /* Chemin de votre image */
+  background-image: url('/img/Libre-de-poemes.webp'); /* Chemin de votre image */
   background-size: cover; /* L'image occupe toute la fenêtre */
   background-repeat: no-repeat; /* Empêche la répétition de l'image */
   background-attachment: fixed; /* Garde l'image fixe lors du défilement */
@@ -179,6 +179,9 @@ header h1 {
 
 .search-container {
   padding: 15px 0px 0px 5px;
+  position: relative;
+  display: inline-block;
+  width: 100%;
 }
 
 .search {
@@ -211,6 +214,22 @@ input[type="text"]:focus {
   border-color: #2C3E50; /* Une couleur plus vive au focus */
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);/* Glow élégant */
   background-color: #fff;
+}
+
+.clear-button {
+  position: absolute;
+  right: 69px;
+  top: 63%;
+  transform: translateY(-50%);
+  font-size: 1.2rem;
+  color: #8B5E3C;
+  cursor: pointer;
+  font-weight: 900;
+  display: none; /* Par défaut, la croix est cachée */
+}
+
+.clear-button:hover {
+  color: #2C3E50;
 }
 
 .sidebar.open {
@@ -403,7 +422,7 @@ header::after {
 }
 
 .poem-text{
-  height: 200px;
+  /*height: 200px;*/
   overflow-y:auto;
 }
 
@@ -426,6 +445,7 @@ header::after {
   
 .poem-container:hover .poem-image {
   transform: translateY(0%);
+  cursor: pointer;
 }
   
 .poem-text {
@@ -439,12 +459,12 @@ header::after {
   text-align: center;
   transform: translateY(100%);
   transition: transform 0.5s ease-in-out;
+  mask-image: linear-gradient(to top, transparent 55%, black 95%);
 }
   
 .poem-container:hover .poem-text {
-  transform: translateY(0);
+  transform: translateY(50%);
 }
-
 
 .modal {
   display: none;
@@ -458,6 +478,19 @@ header::after {
   align-items: center;
   animation: fadeIn 0.5s ease-in-out;
   z-index: 1001;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.modal.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal:not(.show) {
+  opacity: 0;
+  visibility: hidden;
 }
 
 /* Animation keyframes */
