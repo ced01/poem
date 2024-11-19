@@ -2,38 +2,36 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.body.classList.add("loaded");
 
-    const swiper = new Swiper('.swiper-container', {
-        /*effect: 'fade', // Active l'effet de fondu
-        fadeEffect: {
-            crossFade: true, // Transition douce entre les slides
-        },*/
-        effect: 'cube', // Active l'effet cube
-        cubeEffect: {
-          shadow: true,
-          slideShadows: false,
-          shadowOffset: 20,
-          shadowScale: 0.94,
-        },
-        /*effect: 'coverflow',
-        coverflowEffect: {
-            rotate: 50, // Rotation des slides
-            stretch: 0, // Écartement entre les slides
-            depth: 100, // Profondeur des slides
-            modifier: 1,
-            slideShadows: true,
-        },*/
-        speed: 1600,
-        pagination: {
-            el: '.swiper-pagination',
-            clickable: true
-        },
-        navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-        },
-        slidesPerView: 1, // Nombre de diapositives visibles
-        spaceBetween: 10, // Espace entre les diapositives
-    });
+    
+    let swiper = null;
+
+    if(window.screen.width <= 487){
+        swiper = new Swiper('.swiper-container', {
+            effect: 'coverflow',
+            coverflowEffect: {
+                rotate: 50, // Rotation des slides
+                stretch: 0, // Écartement entre les slides
+                depth: 100, // Profondeur des slides
+                modifier: 1,
+                slideShadows: false,
+            },
+            speed: 1600,
+            slidesPerView: 1, // Nombre de diapositives visibles
+        });
+    }else {
+        swiper = new Swiper('.swiper-container', {
+            effect: 'coverflow',
+            coverflowEffect: {
+                rotate: 50, // Rotation des slides
+                stretch: 0, // Écartement entre les slides
+                depth: 100, // Profondeur des slides
+                modifier: 1,
+                slideShadows: false,
+            },
+            speed: 1600,
+            slidesPerView: 1, // Nombre de diapositives visibles
+        });
+    }
 
     // Gérer l'ouverture et la fermeture de la barre latérale
     const toggleButton  = document.getElementById('burger-menu');

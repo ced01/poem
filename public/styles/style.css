@@ -24,13 +24,18 @@ body.loaded .poem-container {
   transform: translateY(0);
 }
 
+h1 {
+  margin: 0;
+  font-size: 2.5rem;
+}
+
 main {
   flex: 1; /* Permet à main de prendre tout l'espace disponible */
   /*display: flex;*/
   justify-content: center;
   align-items: center;
-  overflow-y: auto;
-  overflow-x: hidden;
+  overflow: hidden;
+
 }
 
 /* Header principal */
@@ -342,13 +347,10 @@ footer {
   box-shadow: 0px -4px 6px rgba(0, 0, 0, 0.1);
 }
 
-
-h1 {
-  margin: 0;
-  font-size: 2.5rem;
-}
   
 .poem-section {
+  width:75%;
+  margin-left: 12.5% !important;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -357,7 +359,7 @@ h1 {
   
 .poem-container {
   position: relative;
-  width: 80%;
+  width: 50%;
   max-width: 1200px;
   margin-bottom: 2rem;
   overflow: hidden;
@@ -366,6 +368,11 @@ h1 {
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.poem-text{
+  height: 200px;
+  overflow-y:auto;
 }
 
 .poem-container:nth-child(1) {
@@ -548,7 +555,13 @@ footer {
 /* === Responsive Design === */
 
 /* Pour les tablettes */
-@media (max-width: 768px) {
+@media (max-width: 1545px) and (min-width:487px) {
+
+  .poem-section {
+    width:52%;
+    margin-left: 24% !important;
+  }
+
   .poem-container {
     max-width: 90%;
     margin: 0 auto;
@@ -572,7 +585,7 @@ footer {
   }
   
   .modal-content {
-    width: 90%;
+    width: 40%;
     max-height: 75vh;
     padding: 1rem;
   }
@@ -584,7 +597,12 @@ footer {
 }
 
 /* Pour les smartphones */
-@media (max-width: 480px) {
+@media (max-width: 487px) {
+
+  .poem-section {
+    width:100%;
+    margin-left: 0%;
+  }
 
   header h1 {
     font-size: 1.5rem;
