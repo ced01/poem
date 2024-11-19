@@ -4,7 +4,7 @@ html, body {
   height: 100%;
   display: flex;
   flex-direction: column; 
-  overflow: hidden; 
+  scroll-behavior: smooth;
 }
 
 body {
@@ -17,12 +17,54 @@ body {
   background-repeat: no-repeat; /* Empêche la répétition de l'image */
   background-attachment: fixed; /* Garde l'image fixe lors du défilement */
   background-position: center; /* Centre l'image dans la fenêtre */
+  overflow-y: auto; /* Active le scrolling vertical global */
+  overflow-x: hidden; /* Empêche le scrolling horizontal */
 }
 
 body.loaded .poem-container {
   opacity: 1;
   transform: translateY(0);
 }
+
+/* Mode portrait */
+body.portrait .poem-section {
+  width: 90%;
+  margin: 0 auto;
+}
+
+body.portrait header {
+  padding: 1rem;
+}
+
+body.portrait .poem-container {
+  width: 100%;
+}
+
+/* Mode paysage */
+body.landscape .poem-section {
+  width: 35%;
+  margin-left: 50% !important;
+}
+body.landscape header {
+  height: 33px;
+}
+
+body.landscape header h1 {
+  font-size: 2rem;
+}
+
+body.landscape #poemList {
+  height: 180px;
+}
+
+body.landscape header {
+  padding: 2rem;
+}
+
+body.landscape .poem-container {
+  width: 50%;
+}
+
 
 h1 {
   margin: 0;
@@ -197,7 +239,7 @@ input[type="text"]:focus {
   font-weight: 600;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
   margin: 1rem 0;
-  font-size: 1.7rem;
+  font-size: 1.3rem;
   cursor: pointer;
   color:white;
   transition: color 0.3s ease;
@@ -337,16 +379,6 @@ header::after {
   }
 }
 
-
-footer {
-  background-color: #2C3E50;
-  color: #fdf8f2;
-  text-align: center;
-  padding: 1rem;
-  font-size: 1rem;
-  box-shadow: 0px -4px 6px rgba(0, 0, 0, 0.1);
-}
-
   
 .poem-section {
   width:75%;
@@ -413,14 +445,6 @@ footer {
   transform: translateY(0);
 }
 
-  
-footer {
-  background-color: #2C3E50;
-  color: #fdf8f2;
-  text-align: center;
-  padding: 1rem;
-}
-  
 
 .modal {
   display: none;
@@ -555,7 +579,7 @@ footer {
 /* === Responsive Design === */
 
 /* Pour les tablettes */
-@media (max-width: 1545px) and (min-width:487px) {
+@media (max-width: 1545px) and (min-width:487) {
 
   .poem-section {
     width:52%;
@@ -590,10 +614,6 @@ footer {
     padding: 1rem;
   }
   
-  footer {
-    font-size: 0.8rem;
-    padding: 0.5rem;
-  }
 }
 
 /* Pour les smartphones */
@@ -664,9 +684,22 @@ footer {
     font-size: 0.9rem;
   }
 
-  footer {
-    font-size: 0.8rem;
-    padding: 0.5rem;
+}
+
+/* Mode portrait */
+@media (orientation: portrait) {
+  body {
+    overflow-y: auto;
+  }
+}
+
+/* Mode paysage */
+@media (orientation: landscape) {
+  body {
+    overflow-y: auto;
   }
 
+  main {
+    margin-bottom: 4rem; 
+  }
 }
