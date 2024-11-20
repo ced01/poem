@@ -88,6 +88,7 @@ header {
   padding: 2rem;
   position: relative;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+  mask-image: linear-gradient(to top, transparent 5%, black 20%);
   overflow: hidden; /* Cache l'animation en dehors du header */
 }
 
@@ -233,7 +234,18 @@ input[type="text"]:focus {
 }
 
 .sidebar.open {
-  left: 0;
+  animation: slideIn 0.5s ease forwards;
+}
+
+@keyframes slideIn {
+  from {
+    left: -300px;
+    opacity: 0;
+  }
+  to {
+    left: 0;
+    opacity: 1;
+  }
 }
 
 .sidebar.open > #poemList {
@@ -245,6 +257,37 @@ input[type="text"]:focus {
   height: 350px;
   overflow-y: hidden;
 }
+
+.random-poem-button-container {
+  margin: 20px 0;
+}
+
+#randomPoemButton {
+  background-color: #6a4c42; /* Couleur marron foncé */
+  color: #ffffff; /* Couleur du texte */
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-family: 'Georgia', serif;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.3s ease;
+  margin-top: 2%;
+  background: linear-gradient(145deg, #5c3e36, #6a4c42);
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2), -2px -2px 5px rgba(255, 255, 255, 0.1);
+}
+
+#randomPoemButton:hover {
+  background-color: #5c3e36; /* Couleur plus sombre au survol */
+  transform: scale(1.05);
+  background: linear-gradient(145deg, #6a4c42, #5c3e36);
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3), -2px -2px 8px rgba(255, 255, 255, 0.2);
+}
+
+#randomPoemButton:active {
+  transform: scale(0.95);
+}
+
 
 /* Liste des poèmes */
 .sidebar ul {
@@ -266,7 +309,9 @@ input[type="text"]:focus {
 
 /* Style de base des titres dans la barre latérale */
 .sidebar-title-link {
-  font-size: 1.2rem;
+
+  font-size: 1.4rem;
+  line-height: 2rem;
   font-family: 'Georgia', serif;
   color: #fdf8f2; /* Couleur claire */
   text-decoration: none;
@@ -441,6 +486,7 @@ header::after {
   height: auto;
   display: block;
   transition: transform 0.5s ease-in-out;
+  
 }
   
 .poem-container:hover .poem-image {

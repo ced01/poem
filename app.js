@@ -11,6 +11,10 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
+app.get('/data/poems.json', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'data', 'poems.json'));
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
