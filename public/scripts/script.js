@@ -109,12 +109,37 @@ document.addEventListener('DOMContentLoaded', () => {
             speed: 1600,
             slidesPerView: 1, // Nombre de diapositives visibles
         });
+    
+    swiper.on('slideChange', () => {
+        // Récupérer l'index actuel du slide
+        const currentIndex = swiper.activeIndex;
+        
+        // Trouver tous les éléments de la sidebar
+        const sidebarItems = document.querySelectorAll('.sidebar-title-link');
+        
+        // Réinitialiser toutes les classes de sélection
+        sidebarItems.forEach((item) => {
+            item.classList.remove('sidebar-title-selected');
+            item.setAttribute('selected', 'false');
+        });
+        
+        // Ajouter la classe sélectionnée à l'élément correspondant
+        const selectedItem = sidebarItems[currentIndex];
+        if (selectedItem) {
+            selectedItem.classList.add('sidebar-title-selected');
+            selectedItem.setAttribute('selected', 'true');
+        
+            // Optionnel : défiler jusqu'à l'élément actif
+            selectedItem.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center',
+            });
+        }
+        });
 
-        const wordMapContainer = document.getElementById('wordMapContainer');
-
+    const wordMapContainer = document.getElementById('wordMapContainer');
     // Liste de mots-clés
     const keywords = ['Amour', 'Nature', 'Rêves', 'Mémoire', 'Horizon', 'Silence', 'Temps', 'Espoir', 'Psyché', "Création", "Science"];
-
     // Garder une trace des positions des bulles générées
     const generatedBubbles = [];
 
