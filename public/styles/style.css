@@ -824,7 +824,7 @@ canvas {
   }
 
   .burger-menu {
-    right: 16px;
+    /*right: 16px;*/
     top: 5px;
   }
 
@@ -870,22 +870,9 @@ canvas {
     font-size: 0.9rem;
   }
 
-}
-
-/* Mode portrait */
-@media (orientation: portrait) {
-  body {
-    overflow-y: auto;
-  }
-}
-
-/* Mode paysage */
-@media (orientation: landscape) {
-  body {
-    overflow-y: auto;
+  #wordMapContainer {
+    display:none;
   }
 
-  main {
-    margin-bottom: 4rem; 
-  }
 }
+
