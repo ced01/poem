@@ -2,6 +2,32 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+function findClosestImage(element) {
+    // Vérifier si l'élément lui-même contient une image
+    if (element.tagName === 'IMG' && element.src) {
+        return element; // L'image est trouvée
+    }
+
+    // Recherche ascendante dans le DOM (parents)
+    let parent = element.parentElement;
+    while (parent) {
+        const imageInParent = parent.querySelector('img');
+        if (imageInParent && imageInParent.src) {
+            return imageInParent; // Image trouvée dans un parent
+        }
+        parent = parent.parentElement;
+    }
+
+    // Recherche descendante dans le DOM (enfants)
+    const imageInChildren = element.querySelector('img');
+    if (imageInChildren && imageInChildren.src) {
+        return imageInChildren; // Image trouvée dans les enfants
+    }
+
+    // Aucun résultat trouvé
+    return null;
+}
+
 document.addEventListener('DOMContentLoaded', () => {
 
     // Ajouter la classe "loaded" au body pour activer les animations
@@ -57,6 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             paragraphes.forEach(paragraphe => {
                 let paragrapheElement = document.createElement("p");
+                paragrapheElement.classList.add("poem-line");
                 paragrapheElement.innerHTML = paragraphe.replaceAll("**", "<br>");
                 poemTextEl.appendChild(paragrapheElement);
             });
@@ -66,7 +93,6 @@ document.addEventListener('DOMContentLoaded', () => {
             slide.appendChild(poemeContainer);
             
             slideWrapper.append(slide);
-            console.log(slideWrapper);
 
         });
 
@@ -311,14 +337,68 @@ document.addEventListener('DOMContentLoaded', () => {
                 block: 'center', // Centrer le poème dans la vue
             });
 
+            document.querySelector("main").scrollTo({
+                top: 0,
+                behavior: 'smooth' // Défilement fluide
+            });
+
         });
 
         // Gestion de la modale
         poemContainers.forEach(container => {
-            container.addEventListener('click', () => {
+            container.addEventListener('click', (event) => {
                 const html = container.querySelector('.poem-text').innerHTML;
                 modalText.innerHTML = html;
+
+                let title = modalText.querySelector('h2');
+                const closestImage = findClosestImage(event.target);
+                const imgSrc = closestImage.src;
+
+                document.getElementsByClassName("modal")[0].style.backgroundImage = "url("+imgSrc+")";
+
                 modal.classList.add('show');
+
+                // Sélectionnez tous les éléments de classe "poem-line"
+                const lines = modalText.querySelectorAll('.poem-line');
+
+                title.style.fontFamily = "Dancing Script, cursive";
+                title.style.fontSize = "2rem";
+                
+                // Ajouter un effet de survol
+                title.addEventListener('mouseover', () => {
+                    title.style.color = '#8B5E3C'; // Change la couleur
+                    title.style.transition = 'transform 0.3s ease, color 0.3s ease'; // Ajoute une transition
+                });
+
+                // Retirer l'effet lorsque la souris quitte
+                title.addEventListener('mouseout', () => {
+                    title.style.color = ''; // Restaure la couleur initiale
+                });
+
+                lines.forEach(line => {
+                    line.style.fontFamily = "Dancing Script, cursive";
+                    line.style.fontWeight = 300;
+                    line.style.fontSize = "1.3rem";
+                });
+
+                // Timeline GSAP pour animer les lignes une par une
+                const timeline = gsap.timeline({ delay: 0.8 });// Ajout d'un délai initial
+                
+                timeline.fromTo(
+                    modalText.querySelector('h2'),
+                    { opacity: 0, y: -20 },
+                    { opacity: 1, y: 0, duration: 1, ease: 'power2.out' }
+                );
+
+                // Ajouter chaque ligne avec un effet de fondu
+                lines.forEach((line, index) => {
+                    timeline.fromTo(
+                        line, // Élément à animer
+                        { opacity: 0, y: 5 }, // État initial (transparent, décalé vers le bas)
+                        { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' }, // État final
+                        index * 4 // Délai relatif entre chaque animation
+                    );
+                });
             });
         });
 
