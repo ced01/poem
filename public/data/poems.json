@@ -1,9 +1,16 @@
 {
     "poems": [
         {
+            "theme":"Temps",
             "title": "Les Aiguilles du Souvenir",
             "img": "Les-aiguilles-du-souvenir.webp",
             "content": "Me voila des a présent à l'écoute du temps,**Celui qui passe, celui qui s'arrête parfois, **Le passé se décrit en une unique voie.**Le future se compose de murmures attrayant.\n\nPlus j'avance a tâtons dans ma découverte**Plus je sonde aveuglement mon expérience,**Plus je défie l'ombre qui m'observe en silence,**Je réalise que chaque seconde est offerte.\n\nRevenir sur les instants précieux de ma vie,**Comme un film que l'on visionne a nouveau,**Les éclats de joie, les larmes, les maux,**Tissent une trame en moi, en mon esprit.\n\nDans cette horloge aux aiguilles inversées,**Chaque tic résonne d’un souvenir chuchoté,**Un instant où passé et futur se confondent,**Dans une boucle où le temps jamais n’abonde.\n\nDans l’infini des heures, je cherche un repère,**Un refuge où s’éteignent les tourments amers.**Chaque battement d’horloge devient écho,**D’un désir de saisir l’éphémère au galop.\n\nPeut-on figer l’instant d’un simple regard,**Ou briser l’horloge pour un départ ?**Je tends ma main vers les aiguilles endormies,**Espérant toucher l'éternité infinie."
+        },
+        {
+            "theme":"Création",
+            "title": "Je vais écrire",
+            "img": "Je-vais-ecrire.webp",
+            "content":"Pour voir au-delà des mots,**Se satisfaire et aller de l’avant.**Pour ressentir à nouveau,**L’être qui fut en moi l’enfant.\n\nPour me faire passer le temps,**Faire quelque chose en attendant.**Pour la mélancolie et la nostalgie,**Cette absence, ce vide ressenti.\n\nDe sens mon écriture est dénuée,**Elle va, enfantine et revient vieillard,**Doucement elle s’engage à l’art,**Pour des mots bien placés, je vais m’abîmer.\n\nÉcrire pour qui pour quoi ?**Ces mots, que tu lis, sont déjà tiens**Il suffit d’un instant, d’un rien,**Pour qu’ils soient force de loi.\n\nQuelle direction, quelle envie ?**Pour qu’à tes yeux ils prennent vie,**Écrire est ce créer ou faire exister,**De différentes et nombreuses réalités ?\n\nEntre mémoire et souvenirs,**Entre présages et avenir**Entre ratures et essais**Ma main ne fait que trembler."
         }
     ]
 }

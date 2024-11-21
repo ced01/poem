@@ -30,6 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
             li.classList.add("sidebar-title-link");
             li.setAttribute("selected", "false");
             li.setAttribute("data-index", parseInt(allOptions[allOptions.length - 1].getAttribute("data-index")) + 1);
+            li.setAttribute("data-theme", poem.theme );
             li.innerHTML = (poem.title == undefined || poem.title == "") ? "Pas de titre" : poem.title;
             
             poemList.append(li);
@@ -83,6 +84,122 @@ document.addEventListener('DOMContentLoaded', () => {
             slidesPerView: 1, // Nombre de diapositives visibles
         });
 
+        const wordMapContainer = document.getElementById('wordMapContainer');
+
+    // Liste de mots-clés
+    const keywords = ['Amour', 'Nature', 'Rêves', 'Mémoire', 'Horizon', 'Silence', 'Temps', 'Espoir', 'Psyché', "Création", "Science"];
+
+    // Garder une trace des positions des bulles générées
+    const generatedBubbles = [];
+
+    // Fonction pour détecter les chevauchements
+    function checkOverlap(bubble1, bubble2) {
+        const rect1 = bubble1.getBoundingClientRect();
+        const rect2 = bubble2.getBoundingClientRect();
+        return !(
+            rect1.right < rect2.left ||
+            rect1.left > rect2.right ||
+            rect1.bottom < rect2.top ||
+            rect1.top > rect2.bottom
+        );
+    }
+
+    // Fonction pour activer une boucle visuelle entre les bulles chevauchées
+    function handleOverlapAnimation(overlappingBubbles) {
+        let currentIndex = 0;
+
+        setInterval(() => {
+            overlappingBubbles.forEach((bubble, index) => {
+                bubble.style.zIndex = index === currentIndex ? 100 : 1; // La bulle active passe au premier plan
+                bubble.style.transform = index === currentIndex ? 'scale(1.2)' : 'scale(1)'; // Mise en avant douce
+            });
+
+            currentIndex = (currentIndex + 1) % overlappingBubbles.length; // Passer à la bulle suivante
+            }, 2000); // Changer toutes les 2 secondes
+        }
+
+    // Générer les bulles de mots-clés
+    keywords.forEach((word) => {
+        
+        const bubble = document.createElement('div');
+        bubble.classList.add('word-bubble');
+        bubble.innerText = word;
+
+        let x, y;
+        let attempts = 0;
+        const maxAttempts = 100; // Pour éviter une boucle infinie
+
+        do {
+            x = Math.random() * (wordMapContainer.offsetWidth - 90); // Largeur de la bulle (ajustez selon la taille)
+            y = Math.random() * (wordMapContainer.offsetHeight - 90); // Hauteur de la bulle
+            attempts++;
+        } while (attempts < maxAttempts);
+
+        bubble.style.left = `${x}px`;
+        bubble.style.top = `${y}px`;
+
+        // Ajouter un événement clic pour afficher les poèmes associés
+        bubble.addEventListener('click', () => {
+
+            let bubbles = document.querySelectorAll(".word-bubble");
+            
+            bubbles.forEach(bubble => {
+                bubble.classList.remove("selected-theme");
+            });
+
+            bubble.classList.add("selected-theme");
+
+            // Réinitialiser tous les titres
+            sidebarTitles.forEach(item => {
+                item.classList.remove('sidebar-title-selected');
+                item.setAttribute('selected', 'false');
+            });
+
+            // On trouve tout les poèmes lié au theme choisit
+            let selectedOptions = document.querySelectorAll("li[data-theme="+word+""); 
+            // On en choisit un au hasard
+            let randIndex = getRandomInt(0, selectedOptions.length - 1);
+            let dataIndex = selectedOptions[randIndex].getAttribute("data-index");
+            selectedOptions[randIndex].setAttribute("selected", true);
+            selectedOptions[randIndex].classList.add("sidebar-title-selected");
+            selectedOptions[randIndex].scrollIntoView({
+                behavior: 'smooth', // Défilement fluide
+                block: 'center', // Centrer le poème dans la vue
+            });
+            
+            document.querySelector("main").scrollTo({
+                top: 0,
+                behavior: 'smooth' // Défilement fluide
+            });
+
+            setTimeout(function() {
+                swiper.slideTo(dataIndex, 500);
+            }, 1000);
+            // On va vers le poem chosit dans le slide.
+            
+
+        });
+
+        wordMapContainer.appendChild(bubble);
+        generatedBubbles.push(bubble);
+    });
+
+    // Vérifier les chevauchements et lancer l'animation
+    const overlappingBubbles = [];
+
+    for (let i = 0; i < generatedBubbles.length; i++) {
+        for (let j = i + 1; j < generatedBubbles.length; j++) {
+            if (checkOverlap(generatedBubbles[i], generatedBubbles[j])) {
+                overlappingBubbles.push(generatedBubbles[i], generatedBubbles[j]);
+            }
+        }
+    }
+
+    // Si des chevauchements sont détectés, lancer l'animation
+    if (overlappingBubbles.length > 0) {
+        handleOverlapAnimation(overlappingBubbles);
+    }
+
         // Éléments interactifs
         const toggleButton = document.getElementById('burger-menu');
         const sidebar = document.getElementById('sidebar');
@@ -116,11 +233,20 @@ document.addEventListener('DOMContentLoaded', () => {
             poems.forEach(poem => {
                 poem.style.display = poem.textContent.toLowerCase().includes(query) ? '' : 'none';
             });
+            let selectedPoem = document.querySelector("li[selected=true]");
+            
+            if(selectedPoem != null){
+                selectedPoem.scrollIntoView({
+                    behavior: 'smooth', // Défilement fluide
+                    block: 'center', // Centrer le poème dans la vue
+                });
+            }
         });
 
         // Fonction pour basculer la barre latérale
         toggleButton.addEventListener('click', () => {
             sidebar.classList.toggle('open');
+            sidebar.classList.toggle('closed');
             toggleButton.classList.toggle('active');
             toggleButton.classList.toggle('toggled');
         });
@@ -131,6 +257,16 @@ document.addEventListener('DOMContentLoaded', () => {
             poems.forEach(poem => {
                 poem.style.display = poem.textContent.toLowerCase().includes(query) ? '' : 'none';
             });
+
+            let selectedPoem = document.querySelector("li[selected=true]");
+
+            if( selectedPoem != null ){
+                selectedPoem.scrollIntoView({
+                    behavior: 'smooth', // Défilement fluide
+                    block: 'center', // Centrer le poème dans la vue
+                });
+            }
+
         });
 
         // Gestion des titres sélectionnés dans la barre latérale
@@ -167,12 +303,14 @@ document.addEventListener('DOMContentLoaded', () => {
             // Ajouter la classe sélectionnée au titre cliqué
             poems[randIndex].classList.add('sidebar-title-selected');
             poems[randIndex].setAttribute('selected', 'true');
-            
+            poems[randIndex].style.display = '';
+
              // Défilement fluide vers le poème sélectionné
-            poems[randIndex].scrollIntoView({
+             poems[randIndex].scrollIntoView({
                 behavior: 'smooth', // Défilement fluide
                 block: 'center', // Centrer le poème dans la vue
             });
+
         });
 
         // Gestion de la modale
