@@ -105,6 +105,31 @@ header h1 {
   animation: fadeInTitle 2s ease-out;
 }
 
+/* Conteneur pour la citation */
+#daily-quote {
+  font-family: "Dancing Script", cursive; /* Utiliser une police élégante */
+  font-style: italic;
+  font-size: 1.5rem; /* Taille discrète mais lisible */
+  color: #ffd700; /* Couleur neutre et douce */
+  text-align: center;
+  margin-top: 10px; /* Espacement sous le titre */
+  opacity: 0; /* Pour l'effet de fondu */
+  animation: citatiofadeIn 1.5s ease-in-out forwards;
+}
+
+/* Animation de fondu */
+@keyframes citatiofadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px); /* Légère montée */
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
 @keyframes fadeInTitle {
   0% {
     opacity: 0;
@@ -158,12 +183,12 @@ header h1 {
 #poemList::-webkit-scrollbar-thumb {
   background: #2C3E50; /* Couleur marron pour correspondre à l'esthétique générale */
   border-radius: 10px; /* Coins arrondis pour un style cohérent */
-  border: 2px solid #f8f5ec; /* Ajouter un contour pour un effet contrasté */
+  border: 1px solid #f8f5ec; /* Ajouter un contour pour un effet contrasté */
 }
 
 /* Hover effect on the scrollbar thumb */
 #poemList::-webkit-scrollbar-thumb:hover {
-  background: #e1e6eb; /* Accentuer la couleur au survol */
+  background: #ffd700; /* Accentuer la couleur au survol */
 }
 
 
@@ -181,12 +206,12 @@ main::-webkit-scrollbar-track {
 main::-webkit-scrollbar-thumb {
   background: #2C3E50; /* Couleur marron pour correspondre à l'esthétique générale */
   border-radius: 10px; /* Coins arrondis pour un style cohérent */
-  border: 2px solid #f8f5ec; /* Ajouter un contour pour un effet contrasté */
+  border: 1px solid #f8f5ec; /* Ajouter un contour pour un effet contrasté */
 }
 
 /* Hover effect on the scrollbar thumb */
 main::-webkit-scrollbar-thumb:hover {
-  background: #e1e6eb; /* Accentuer la couleur au survol */
+  background: #ffd700; /* Accentuer la couleur au survol */
 }
 
 .sidebar-title{
@@ -218,33 +243,43 @@ main::-webkit-scrollbar-thumb:hover {
   display: inline;
 }
 
-/* Style de l'input */
+/* Style des champs de recherche */
 input[type="text"] {
-  width: 70%;
-  padding: 0.5rem 1rem;
-  border: 1px solid #8B5E3C; /* Marron pour l'harmonie */
-  border-radius: 5px; /* Coins arrondis élégants */
-  background-color: #fdf8f2;
-  font-size: 1rem;
-  font-family: 'Georgia', serif;
-  color: #2C3E50;
-  background-color: #f8f5ec;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  width: 60%;
+  padding: 10px 15px;
+  margin-bottom: 15px;
+  border: 1px solid #e1e6eb;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.9);
+  font-size: 14px;
+  font-family: 'Open Sans', sans-serif;
+  color: #5a4b3c;
   transition: all 0.3s ease-in-out;
 }
 
-/* Effet au focus */
+input[type="text"]::placeholder {
+  color: #b58863;
+  font-style: italic;
+}
+
 input[type="text"]:focus {
   outline: none;
-  border-color: #2C3E50; /* Une couleur plus vive au focus */
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);/* Glow élégant */
-  background-color: #fff;
+  border-color: #ffd700;
+  box-shadow: 0 0 5px #ffd700;
+  background: #fff;
+}
+
+.clear-title-button {
+  top: 37%;
+}
+
+.clear-poem-button {
+  top: 78%;
 }
 
 .clear-button {
   position: absolute;
   right: 69px;
-  top: 63%;
   transform: translateY(-50%);
   font-size: 1.2rem;
   color: #8B5E3C;
@@ -301,31 +336,26 @@ input[type="text"]:focus {
 .random-poem-button-container {
   margin: 20px 0;
 }
-
+/* Découverte aléatoire bouton */
 #randomPoemButton {
-  background-color: #6a4c42; /* Couleur marron foncé */
-  color: #ffffff; /* Couleur du texte */
+  display: block;
+  width: 80%;
+  padding: 10px 15px;
+  font-size: 1.2rem;
+  font-family: 'Dancing Script', cursive;
+  color: #fff;
+  background: linear-gradient(to right, #ffd700, #8c5e3c);
   border: none;
-  border-radius: 8px;
-  padding: 10px 20px;
-  font-size: 16px;
-  font-family: 'Georgia', serif;
+  border-radius: 20px;
   cursor: pointer;
-  transition: transform 0.2s ease, background-color 0.3s ease;
-  margin-top: 2%;
-  background: linear-gradient(145deg, #5c3e36, #6a4c42);
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2), -2px -2px 5px rgba(255, 255, 255, 0.1);
+  text-align: center;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
 #randomPoemButton:hover {
-  background-color: #5c3e36; /* Couleur plus sombre au survol */
-  transform: scale(1.05);
-  background: linear-gradient(145deg, #6a4c42, #5c3e36);
-  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3), -2px -2px 8px rgba(255, 255, 255, 0.2);
-}
-
-#randomPoemButton:active {
-  transform: scale(0.95);
+  background: linear-gradient(to right, #8c5e3c, #ffd700);
+  color: #fff;
 }
 
 
@@ -333,7 +363,8 @@ input[type="text"]:focus {
 .sidebar ul {
   list-style: none;
   padding: 10px;
-  margin-top: 3rem; /* Espace pour le bouton */
+  margin-top: 1rem; 
+  margin-bottom: 3rem; /* Espace pour le bouton */
 }
 
 .sidebar ul li {
@@ -343,8 +374,6 @@ input[type="text"]:focus {
   margin: 1rem 0;
   font-size: 1.3rem;
   cursor: pointer;
-  color:white;
-  transition: color 0.3s ease;
 }
 
 /* Style de base des titres dans la barre latérale */
@@ -382,30 +411,41 @@ input[type="text"]:focus {
 }
 
 
+/* Poème sélectionné */
 .sidebar-title-selected {
-  color: #e1e6eb; 
+  color: #FFD700;
+  font-weight: bold; /* Renforce la mise en avant */
   position: relative;
+  text-shadow: 0px 0px 10px rgba(255, 215, 0, 0.8); /* Ajout d'une lueur subtile */
+  transition: text-shadow 0.3s ease-in-out, color 0.3s ease-in-out;
 }
 
+/* Indicateur animé actif */
 .sidebar-title-selected::after {
   content: ''; 
   position: absolute;
   left: 0;
   bottom: 0;
-  width: 75%;
+  width: 90%; /* Toujours présent pour l'élément sélectionné */
   height: 2px;
-  background-color: #e1e6eb; 
-  transition: width 0.3s ease-in-out;
+  background: linear-gradient(90deg, #FFD700, #FFC200); /* Dégradé lumineux */
+  box-shadow: 0px 0px 10px rgba(255, 215, 0, 0.8); /* Lueur autour de la ligne */
+  transition: width 0.5s ease-in-out, box-shadow 0.3s ease-in-out; /* Effet fluide */
 }
 
-/* Survol : étendre la ligne */
+/* Étendre la ligne au survol (uniquement pour hover) */
 .sidebar-title-link:hover::after {
-  width: 75%;
+  background: linear-gradient(90deg, #FFD700, #FFC200);
+  width: 90%; /* Étend sur toute la largeur */
+  box-shadow: 0px 0px 15px rgba(255, 215, 0, 1); /* Accentue la lueur au survol */
 }
 
-/*.sidebar ul li:hover {
-  border-bottom: 1px solid #2C3E50;
-}*/
+/* Effet hover général pour tous les liens */
+.sidebar-title-link:hover {
+  color: #FFD700; /* Doré clair avec un effet chaleureux */
+  text-shadow: 0px 0px 5px rgba(255, 215, 0, 0.8);/* Lueur légère */
+}
+
 
 .toggled {
   right: 270px !important;
@@ -714,7 +754,7 @@ canvas {
 }
 
 .swiper-container {
-  width: 100%;
+  width: 80%;
   height: auto;
   padding: 2rem 0;
 }
@@ -724,10 +764,14 @@ canvas {
 }
 
 .swiper-slide {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: transform 0.8s ease-in-out, opacity 0.8s ease-in-out;
+  opacity: 0; /* Commence par être invisible */
+  transform: translateX(50px);
+  transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+}
+
+.swiper-slide-active {
+  opacity: 1; /* Rendre visible l'élément actif */
+  transform: translateX(0); /* Retour à la position initiale */
 }
 
 
@@ -804,6 +848,12 @@ canvas {
 /* Pour les smartphones */
 @media (max-width: 487px) {
 
+  #daily-quote {
+    width: 50%;
+    margin-left: 25%;
+    font-size: 1rem;
+  }
+  
   .poem-section {
     width:100%;
     margin-left: 0%;
@@ -824,7 +874,7 @@ canvas {
   }
 
   .burger-menu {
-    /*right: 16px;*/
+    right: 16px;
     top: 5px;
   }
 
@@ -840,6 +890,7 @@ canvas {
 
   #sidebar.open .burger-menu { 
     top: 25px;
+   
   }
 
   .toggled {

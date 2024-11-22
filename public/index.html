@@ -11,6 +11,7 @@
 <body>
   <header>
     <h1>Libre de poèmes</h1>
+    <div id="daily-quote"></div>
   </header>
   <div id="sidebar" class="sidebar open">
     <div class="sidebar-menu">
@@ -21,8 +22,10 @@
             <div class="sidebar-title">Séléction</div>
         </div>
         <div class="search-container">
-            <input type="text" class="search" placeholder="Rechercher un poème...">
-            <span class="clear-button" id="clear-button">&times;</span>
+            <input id="searchTitleInput" type="text" class="search" placeholder="Rechercher un poème...">
+            <span  class="clear-button clear-title-button" id="clear-title-button">&times;</span>
+            <input id="searchPoemInput" type="text" id="poemKeywordSearch" placeholder="Par mots clé..." />
+            <span  class="clear-button clear-poem-button" id="clear-poem-button" >&times;</span>
         </div>
     </div>
     

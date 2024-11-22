@@ -30,8 +30,37 @@ function findClosestImage(element) {
 
 document.addEventListener('DOMContentLoaded', () => {
 
+    if(window.innerWidth <= 487){
+        document.getElementById("sidebar").classList.toggle("open");
+        document.getElementById("sidebar").classList.toggle("closed");
+    }
+
     // Ajouter la classe "loaded" au body pour activer les animations
     document.body.classList.add("loaded");
+
+    const dailyQuotes = [
+        { text: "La poésie est le miroir brouillé de l'âme.", author: "Paul Éluard" },
+        { text: "Écrire, c'est graver des rêves dans l'éphémère.", author: "Victor Hugo" },
+        { text: "Chaque mot est une lumière dans l'obscurité.", author: "Charles Baudelaire" },
+        { text: "Le silence est parfois la plus belle des poésies.", author: "André Gide" },
+        { text: "Les mots sont des fenêtres ouvertes sur l'infini.", author: "Rainer Maria Rilke" },
+        { text: "Le poème est l'écho d'une mélodie perdue.", author: "Stéphane Mallarmé" },
+        { text: "L'écriture libère l'âme emprisonnée par le temps.", author: "Jean Cocteau" },
+        { text: "Un poème commence toujours par un frisson.", author: "Jules Renard" },
+        { text: "Les rêves écrits deviennent des réalités éternelles.", author: "Anna de Noailles" },
+        { text: "Le vrai poète est un homme de lumière dans un monde d'ombres.", author: "Apollinaire" },
+        { text: "La poésie est cette alchimie qui transforme le banal en sublime.", author: "René Char" },
+        { text: "Chaque vers est un pas vers l'éternité.", author: "Paul Valéry" },
+        { text: "Les mots, ces gouttes d’étoiles tombées de la nuit.", author: "Alphonse de Lamartine" },
+        { text: "Un poème est un univers contenu dans une goutte d’encre.", author: "Marguerite Yourcenar" },
+        { text: "La poésie est une émotion mise en mots.", author: "Emily Dickinson" }
+    ];
+
+    const randomQuote = dailyQuotes[Math.floor(Math.random() * dailyQuotes.length)];
+
+    const quoteElement = document.getElementById('daily-quote');
+
+    quoteElement.innerHTML = `"${randomQuote.text}" - ${randomQuote.author}`;
 
     // Ajouter les nouveau poem depuis /data/poems.json
 
@@ -102,12 +131,25 @@ document.addEventListener('DOMContentLoaded', () => {
             coverflowEffect: {
                 rotate: 80,
                 stretch: 0,
-                depth: 100,
+                depth: 300,
                 modifier: 1,
                 slideShadows: false,
             },
-            speed: 1600,
-            slidesPerView: 1, // Nombre de diapositives visibles
+            speed: 1000,
+            slidesPerView: 1,
+            on: {
+                slideChangeTransitionStart: () => {
+                    const slides = document.querySelectorAll('.swiper-slide');
+                    slides.forEach((slide) => {
+                        slide.style.transform = 'translateX(50px)'; // Réinitialise la position
+                    });
+                },
+                slideChangeTransitionEnd: () => {
+                    const activeSlide = document.querySelector('.swiper-slide-active');
+                    activeSlide.style.transform = 'translateX(0)'; // Position finale
+                    activeSlide.style.transition = 'opacity 0.5s ease, transform 0.5s ease'; // Animation fluide
+                },
+            }, 
         });
     
     swiper.on('slideChange', () => {
@@ -254,7 +296,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // Éléments interactifs
         const toggleButton = document.getElementById('burger-menu');
         const sidebar = document.getElementById('sidebar');
-        const searchInput = document.querySelector('input[type=text]');
+        const searchTitleInput = document.getElementById('searchTitleInput');
+        const searchPoemInput = document.getElementById('searchPoemInput');
         const poemList = document.getElementById('poemList');
         const poems = poemList.querySelectorAll('li');
         const sidebarTitles = document.querySelectorAll('.sidebar-title-link');
@@ -262,25 +305,55 @@ document.addEventListener('DOMContentLoaded', () => {
         const modalText = document.getElementById('modal-text');
         const modalClose = document.getElementById('modal-close');
         const poemContainers = document.querySelectorAll('.poem-container');
-        const clearButton = document.getElementById('clear-button');
+        const clearTitleButton = document.getElementById('clear-title-button');
+        const clearPoemButton = document.getElementById('clear-poem-button');
         const modalContent = document.querySelector('.modal-content');
+        const poemLines = document.querySelectorAll('.poem-line');
+
 
 
         // Affiche ou masque la croix en fonction du contenu de l'input
-        searchInput.addEventListener('input', () => {
-            if (searchInput.value.trim() !== '') {
-            clearButton.style.display = 'inline';
+        searchTitleInput.addEventListener('input', () => {
+            if (searchTitleInput.value.trim() !== '') {
+                clearTitleButton.style.display = 'inline';
             } else {
-            clearButton.style.display = 'none';
+                clearTitleButton.style.display = 'none';
+            }
+        });
+
+        // Affiche ou masque la croix en fonction du contenu de l'input
+        searchPoemInput.addEventListener('input', () => {
+            if (searchPoemInput.value.trim() !== '') {
+                clearPoemButton.style.display = 'inline';
+            } else {
+                clearPoemButton.style.display = 'none';
             }
         });
 
         // Efface le contenu de l'input au clic sur la croix
-        clearButton.addEventListener('click', () => {
-            searchInput.value = '';
-            clearButton.style.display = 'none';
-            searchInput.focus(); // Replace le focus dans l'input
-            let query = searchInput.value.toLowerCase();
+        clearTitleButton.addEventListener('click', () => {
+            searchTitleInput.value = '';
+            clearTitleButton.style.display = 'none';
+            searchTitleInput.focus(); // Replace le focus dans l'input
+            let query = searchTitleInput.value.toLowerCase();
+            poems.forEach(poem => {
+                poem.style.display = poem.textContent.toLowerCase().includes(query) ? '' : 'none';
+            });
+            let selectedPoem = document.querySelector("li[selected=true]");
+            
+            if(selectedPoem != null){
+                selectedPoem.scrollIntoView({
+                    behavior: 'smooth', // Défilement fluide
+                    block: 'center', // Centrer le poème dans la vue
+                });
+            }
+        });
+
+        clearPoemButton.addEventListener('click', () => {
+            searchPoemInput.value = '';
+            clearPoemButton.style.display = 'none';
+            searchPoemInput.focus(); // Replace le focus dans l'input
+            let query = searchPoemInput.value.toLowerCase();
             poems.forEach(poem => {
                 poem.style.display = poem.textContent.toLowerCase().includes(query) ? '' : 'none';
             });
@@ -303,7 +376,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         // Fonction de recherche dans la barre latérale
-        searchInput.addEventListener('input', (event) => {
+        searchTitleInput.addEventListener('input', (event) => {
             const query = event.target.value.toLowerCase();
             poems.forEach(poem => {
                 poem.style.display = poem.textContent.toLowerCase().includes(query) ? '' : 'none';
@@ -317,6 +390,30 @@ document.addEventListener('DOMContentLoaded', () => {
                     block: 'center', // Centrer le poème dans la vue
                 });
             }
+
+        });
+
+        searchPoemInput.addEventListener('input', (event) => {
+
+            const query = event.target.value.toLowerCase();
+            let foundSlides = new Set();
+
+            poemLines.forEach(poemLine => {
+                if(poemLine.textContent.toLowerCase().includes(query)){
+                    //recupère l'index du slide ou le poemLine se situe
+                    const slide = poemLine.closest('.swiper-slide'); // Modifier selon votre structure HTML
+                    if (slide) {
+                        const index = Array.from(slide.parentNode.children).indexOf(slide); // Trouver l'index du slide
+                        foundSlides.add(index); // Ajouter l'index trouvé dans le Set
+                    }
+
+                }
+            });
+            
+            poems.forEach(poem => {
+                const poemIndex = parseInt(poem.getAttribute("data-index")); // Obtenir l'index du poème
+                poem.style.display = foundSlides.has(poemIndex) ? '' : 'none'; // Afficher ou masquer en fonction des slides trouvés
+            });
 
         });
 
