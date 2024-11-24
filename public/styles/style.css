@@ -2,7 +2,6 @@ html {
   margin: 0;
   padding: 0;
   height: 100%;
-  
 }
 
 body {
@@ -13,12 +12,11 @@ body {
   background-image: url('/img/Libre-de-poemes.webp'); /* Chemin de votre image */
   background-size: cover; /* L'image occupe toute la fenêtre */
   background-repeat: no-repeat; /* Empêche la répétition de l'image */
-  background-attachment: fixed; /* Garde l'image fixe lors du défilement */
   background-position: center; /* Centre l'image dans la fenêtre */
   display: flex;
   flex-direction: column; 
   scroll-behavior: smooth;
-  overflow-x: hidden;
+
 }
 
 body.loaded .poem-container {
@@ -39,32 +37,6 @@ body.portrait header {
 body.portrait .poem-container {
   width: 100%;
 }
-
-/* Mode paysage */
-body.landscape .poem-section {
-  width: 35%;
-  margin-left: 50% !important;
-}
-body.landscape header {
-  height: 33px;
-}
-
-body.landscape header h1 {
-  font-size: 2rem;
-}
-
-body.landscape #poemList {
-  height: 180px;
-}
-
-body.landscape header {
-  padding: 2rem;
-}
-
-body.landscape .poem-container {
-  width: 50%;
-}
-
 
 h1 {
   margin: 0;
@@ -779,28 +751,6 @@ canvas {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.swiper-pagination {
-  position: absolute;
-  bottom: 10px; /* Position sous le carrousel */
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 10;
-}
-
-.swiper-pagination-bullet {
-  background: #f3a953; /* Couleur des points */
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  opacity: 0.8;
-  transition: opacity 0.3s ease;
-}
-
-.swiper-pagination-bullet-active {
-  background: #cf8845; /* Couleur du point actif */
-  opacity: 1;
-}
-
 
 /* === Responsive Design === */
 
@@ -883,7 +833,7 @@ canvas {
 
   #sidebar.open .burger-menu { 
     top: 25px;
-   
+    right: 265px;
   }
 
   header {

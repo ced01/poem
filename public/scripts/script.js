@@ -57,7 +57,7 @@ function generatePositions(container, rows, cols) {
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    if(window.innerWidth <= 487){
+    if(document.body.clientWidth <= 487){
         document.getElementById("sidebar").classList.toggle("open");
         document.getElementById("sidebar").classList.toggle("closed");
     }
@@ -164,6 +164,17 @@ document.addEventListener('DOMContentLoaded', () => {
             },
             speed: 1000,
             slidesPerView: 1,
+            centeredSlides: true,
+            breakpoints: { // Configuration spécifique aux tailles d'écran
+                768: {
+                    slidesPerView: 1,
+                    spaceBetween: 20,
+                },
+                1024: {
+                    slidesPerView: 1,
+                    spaceBetween: 30,
+                },
+            },
             on: {
                 slideChangeTransitionStart: () => {
                     const slides = document.querySelectorAll('.swiper-slide');
