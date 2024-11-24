@@ -478,7 +478,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     theme.classList.remove("selected-theme");
                 });
 
-                document.querySelector("div[theme="+theme+"]").classList.add("selected-theme");
+                if(document.querySelector("div[theme="+theme+"]") !== null){
+                    document.querySelector("div[theme="+theme+"]").classList.add("selected-theme");
+                }
 
                     // Défilement fluide vers le poème sélectionné
                 poems[randIndex].scrollIntoView({
