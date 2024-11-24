@@ -16,26 +16,12 @@ body {
   display: flex;
   flex-direction: column; 
   scroll-behavior: smooth;
-
+  overflow-x: hidden;
 }
 
 body.loaded .poem-container {
   opacity: 1;
   transform: translateY(0);
-}
-
-/* Mode portrait */
-body.portrait .poem-section {
-  width: 90%;
-  margin: 0 auto;
-}
-
-body.portrait header {
-  padding: 1rem;
-}
-
-body.portrait .poem-container {
-  width: 100%;
 }
 
 h1 {
@@ -751,13 +737,39 @@ canvas {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+.swiper-pagination {
+  position: absolute;
+  bottom: 10px; /* Position sous le carrousel */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+
+.swiper-pagination-bullet {
+  background: #f3a953; /* Couleur des points */
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+}
+
+.swiper-pagination-bullet-active {
+  background: #cf8845; /* Couleur du point actif */
+  opacity: 1;
+}
+
 
 /* === Responsive Design === */
 
 /* Pour les tablettes */
 @media (max-width: 1545px) and (min-width:487px) {
 
-
+  html, body {
+    overflow: hidden; /* Désactiver le défilement */
+    height: 100%; /* Fixer la hauteur */
+  }
+  
   .poem-section {
     width:52%;
   }
@@ -796,9 +808,17 @@ canvas {
 /* Pour les smartphones */
 @media (max-width: 487px) {
 
+  html, body {
+    overflow: hidden; /* Désactiver le défilement */
+    height: 100%; /* Fixer la hauteur */
+  }
 
   main{
     flex-direction: column; /* Passer les éléments en pile verticale */
+  }
+
+  body {
+    overflow:hidden;
   }
 
   #daily-quote {
