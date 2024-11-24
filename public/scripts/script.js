@@ -360,7 +360,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Fonction de recherche dans la barre latérale
         searchTitleInput.addEventListener('input', (event) => {
+
+            document.getElementById("searchPoemInput").value = "";
+            document.getElementById("searchPoemInput").setAttribute("disabled",true);
+
             const query = event.target.value.toLowerCase();
+
             poems.forEach(poem => {
                 poem.style.display = poem.textContent.toLowerCase().includes(query) ? '' : 'none';
             });
@@ -373,11 +378,19 @@ document.addEventListener('DOMContentLoaded', () => {
                     block: 'center', // Centrer le poème dans la vue
                 });
             }
+        
+            if(query == ""){
+                document.getElementById("searchPoemInput").removeAttribute("disabled");
+            }
+            
 
         });
 
         searchPoemInput.addEventListener('input', (event) => {
 
+            document.getElementById("searchTitleInput").value = "";
+            document.getElementById("searchTitleInput").setAttribute("disabled",true);
+            
             const query = event.target.value.toLowerCase();
             let foundSlides = new Set();
 
@@ -398,6 +411,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 poem.style.display = foundSlides.has(poemIndex) ? '' : 'none'; // Afficher ou masquer en fonction des slides trouvés
             });
 
+            if(query == ""){
+                document.getElementById("searchTitleInput").removeAttribute("disabled");
+            }
+            
         });
 
         // Gestion des titres sélectionnés dans la barre latérale
@@ -426,49 +443,54 @@ document.addEventListener('DOMContentLoaded', () => {
                     theme.classList.remove("selected-theme");
                 });
 
-                document.querySelector("div[theme="+theme+"]").classList.add("selected-theme");
-
+                if(document.querySelector("div[theme="+theme+"]") !== null){
+                    document.querySelector("div[theme="+theme+"]").classList.add("selected-theme");
+                }
+            
                 swiper.slideTo(index, 500); // Aller au slide avec une transition
             });
         });
 
-    // Navigation aléatoire
+        // Navigation aléatoire
         document.getElementById('randomPoemButton').addEventListener('click', () => {
             
-            let randIndex = getRandomInt(0,parseInt(poems[poems.length-1].getAttribute("data-index")));
-            let theme = "";
-            swiper.slideTo(randIndex, 500);
+            if(!(document.getElementById("searchTitleInput").value !== "" || document.getElementById("searchPoemInput").value !== "")){
 
-            sidebarTitles.forEach(item => {
-                item.classList.remove('sidebar-title-selected');
-                item.setAttribute('selected', 'false');
-            });
+                let randIndex = getRandomInt(0,parseInt(poems[poems.length-1].getAttribute("data-index")));
+                let theme = "";
+                swiper.slideTo(randIndex, 500);
 
-            // Ajouter la classe sélectionnée au titre cliqué
-            poems[randIndex].classList.add('sidebar-title-selected');
-            poems[randIndex].setAttribute('selected', 'true');
-            poems[randIndex].style.display = '';
+                sidebarTitles.forEach(item => {
+                    item.classList.remove('sidebar-title-selected');
+                    item.setAttribute('selected', 'false');
+                });
 
-            theme = poems[randIndex].getAttribute("data-theme");
+                // Ajouter la classe sélectionnée au titre cliqué
+                poems[randIndex].classList.add('sidebar-title-selected');
+                poems[randIndex].setAttribute('selected', 'true');
+                poems[randIndex].style.display = '';
 
-            const themes = [...document.getElementsByClassName("word-bubble")];
-                
-            themes.forEach(theme => {
-                theme.classList.remove("selected-theme");
-            });
+                theme = poems[randIndex].getAttribute("data-theme");
 
-            document.querySelector("div[theme="+theme+"]").classList.add("selected-theme");
+                const themes = [...document.getElementsByClassName("word-bubble")];
+                    
+                themes.forEach(theme => {
+                    theme.classList.remove("selected-theme");
+                });
 
-                // Défilement fluide vers le poème sélectionné
-            poems[randIndex].scrollIntoView({
-                behavior: 'smooth', // Défilement fluide
-                block: 'center', // Centrer le poème dans la vue
-            });
+                document.querySelector("div[theme="+theme+"]").classList.add("selected-theme");
 
-            document.querySelector("main").scrollTo({
-                top: 0,
-                behavior: 'smooth' // Défilement fluide
-            });
+                    // Défilement fluide vers le poème sélectionné
+                poems[randIndex].scrollIntoView({
+                    behavior: 'smooth', // Défilement fluide
+                    block: 'center', // Centrer le poème dans la vue
+                });
+
+                document.querySelector("main").scrollTo({
+                    top: 0,
+                    behavior: 'smooth' // Défilement fluide
+                });
+            }
 
         });
 
