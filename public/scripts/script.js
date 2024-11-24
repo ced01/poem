@@ -28,6 +28,33 @@ function findClosestImage(element) {
     return null;
 }
 
+// Générer dynamiquement les positions basées sur la taille du conteneur
+function generatePositions(container, rows, cols) {
+    
+    const positions = [];
+    const bubbleSize = 85; // Taille approximative de la bulle
+    const padding = 20; // Espace entre les bulles et les bords
+
+    const containerWidth = container.offsetWidth;
+    const containerHeight = container.offsetHeight;
+
+    const xSpacing = (containerWidth - 2 * padding) / cols; // Espacement horizontal
+    const ySpacing = (containerHeight - 2 * padding) / rows; // Espacement vertical
+
+    for (let row = 0; row < rows; row++) {
+        for (let col = 0; col < cols; col++) {
+            const x = padding + col * xSpacing;
+            const y = padding + row * ySpacing;
+
+            // Assurez-vous que la bulle ne dépasse pas les limites du conteneur
+            if (x + bubbleSize <= containerWidth && y + bubbleSize <= containerHeight) {
+                positions.push({ x, y });
+            }
+        }
+    }
+    return positions;
+}
+
 document.addEventListener('DOMContentLoaded', () => {
 
     if(window.innerWidth <= 487){
@@ -177,121 +204,77 @@ document.addEventListener('DOMContentLoaded', () => {
                 block: 'center',
             });
         }
-        });
+    });
 
     const wordMapContainer = document.getElementById('wordMapContainer');
     // Liste de mots-clés
     const keywords = ['Amour', 'Nature', 'Rêves', 'Mémoire', 'Horizon', 'Silence', 'Temps', 'Espoir', 'Psyché', "Création", "Science"];
-    // Garder une trace des positions des bulles générées
-    const generatedBubbles = [];
+    const positions = generatePositions(wordMapContainer, 3, 4);
 
-    // Fonction pour détecter les chevauchements
-    function checkOverlap(bubble1, bubble2) {
-        const rect1 = bubble1.getBoundingClientRect();
-        const rect2 = bubble2.getBoundingClientRect();
-        return !(
-            rect1.right < rect2.left ||
-            rect1.left > rect2.right ||
-            rect1.bottom < rect2.top ||
-            rect1.top > rect2.bottom
-        );
+    // Vérifier que nous avons assez de positions pour le nombre de bulles
+    if (positions.length < keywords.length) {
+        console.log(positions);
+        console.warn("Pas assez de positions définies pour toutes les bulles !");
     }
 
     // Fonction pour activer une boucle visuelle entre les bulles chevauchées
-    function handleOverlapAnimation(overlappingBubbles) {
-        let currentIndex = 0;
+    function handleBubbles() {
 
-        setInterval(() => {
-            overlappingBubbles.forEach((bubble, index) => {
-                bubble.style.zIndex = index === currentIndex ? 100 : 1; // La bulle active passe au premier plan
-                bubble.style.transform = index === currentIndex ? 'scale(1.2)' : 'scale(1)'; // Mise en avant douce
-            });
-
-            currentIndex = (currentIndex + 1) % overlappingBubbles.length; // Passer à la bulle suivante
-            }, 2000); // Changer toutes les 2 secondes
-        }
-
-    // Générer les bulles de mots-clés
-    keywords.forEach((word) => {
+        // Générer les bulles de mots-clés
+        keywords.forEach((word, index) => {
+            const bubble = document.createElement('div');
+            bubble.classList.add('word-bubble');
+            bubble.innerText = word;
+            bubble.setAttribute("theme",word);
+            
+            if(positions.length != 0){
+                 // Assigner une position prédéfinie (ou répéter les positions si trop de bulles)
+                const position = positions[index % positions.length];
+                bubble.style.left = `${position.x}px`;
+                bubble.style.top = `${position.y}px`;
         
-        const bubble = document.createElement('div');
-        bubble.classList.add('word-bubble');
-        bubble.innerText = word;
-
-        let x, y;
-        let attempts = 0;
-        const maxAttempts = 100; // Pour éviter une boucle infinie
-
-        do {
-            x = Math.random() * (wordMapContainer.offsetWidth - 90); // Largeur de la bulle (ajustez selon la taille)
-            y = Math.random() * (wordMapContainer.offsetHeight - 90); // Hauteur de la bulle
-            attempts++;
-        } while (attempts < maxAttempts);
-
-        bubble.style.left = `${x}px`;
-        bubble.style.top = `${y}px`;
-
-        // Ajouter un événement clic pour afficher les poèmes associés
-        bubble.addEventListener('click', () => {
-
-            let bubbles = document.querySelectorAll(".word-bubble");
+                // Ajouter un événement clic pour afficher les poèmes associés
+                bubble.addEventListener('click', () => {
+                    const bubbles = document.querySelectorAll(".word-bubble");
+                    bubbles.forEach(bubble => bubble.classList.remove("selected-theme"));
             
-            bubbles.forEach(bubble => {
-                bubble.classList.remove("selected-theme");
-            });
-
-            bubble.classList.add("selected-theme");
-
-            // Réinitialiser tous les titres
-            sidebarTitles.forEach(item => {
-                item.classList.remove('sidebar-title-selected');
-                item.setAttribute('selected', 'false');
-            });
-
-            // On trouve tout les poèmes lié au theme choisit
-            let selectedOptions = document.querySelectorAll("li[data-theme="+word+""); 
-            // On en choisit un au hasard
-            let randIndex = getRandomInt(0, selectedOptions.length - 1);
-            let dataIndex = selectedOptions[randIndex].getAttribute("data-index");
-            selectedOptions[randIndex].setAttribute("selected", true);
-            selectedOptions[randIndex].classList.add("sidebar-title-selected");
-            selectedOptions[randIndex].scrollIntoView({
-                behavior: 'smooth', // Défilement fluide
-                block: 'center', // Centrer le poème dans la vue
-            });
+                    bubble.classList.add("selected-theme");
             
-            document.querySelector("main").scrollTo({
-                top: 0,
-                behavior: 'smooth' // Défilement fluide
-            });
-
-            setTimeout(function() {
-                swiper.slideTo(dataIndex, 500);
-            }, 1000);
-            // On va vers le poem chosit dans le slide.
+                    // Réinitialiser tous les titres
+                    sidebarTitles.forEach(item => {
+                        item.classList.remove('sidebar-title-selected');
+                        item.setAttribute('selected', 'false');
+                    });
             
-
-        });
-
-        wordMapContainer.appendChild(bubble);
-        generatedBubbles.push(bubble);
-    });
-
-    // Vérifier les chevauchements et lancer l'animation
-    const overlappingBubbles = [];
-
-    for (let i = 0; i < generatedBubbles.length; i++) {
-        for (let j = i + 1; j < generatedBubbles.length; j++) {
-            if (checkOverlap(generatedBubbles[i], generatedBubbles[j])) {
-                overlappingBubbles.push(generatedBubbles[i], generatedBubbles[j]);
+                    // On trouve tous les poèmes liés au thème choisi
+                    const selectedOptions = document.querySelectorAll(`li[data-theme="${word}"]`);
+                    const randIndex = getRandomInt(0, selectedOptions.length - 1);
+                    const dataIndex = selectedOptions[randIndex].getAttribute("data-index");
+            
+                    selectedOptions[randIndex].setAttribute("selected", true);
+                    selectedOptions[randIndex].classList.add("sidebar-title-selected");
+                    selectedOptions[randIndex].scrollIntoView({
+                        behavior: 'smooth', // Défilement fluide
+                        block: 'center', // Centrer le poème dans la vue
+                    });
+            
+                    document.querySelector("main").scrollTo({
+                        top: 0,
+                        behavior: 'smooth', // Défilement fluide
+                    });
+            
+                    setTimeout(function () {
+                        swiper.slideTo(dataIndex, 500);
+                    }, 1000);
+                });
+        
+            wordMapContainer.appendChild(bubble);
             }
-        }
+        });
     }
-
-    // Si des chevauchements sont détectés, lancer l'animation
-    if (overlappingBubbles.length > 0) {
-        handleOverlapAnimation(overlappingBubbles);
-    }
+    
+        handleBubbles();
+    
 
         // Éléments interactifs
         const toggleButton = document.getElementById('burger-menu');
@@ -436,25 +419,48 @@ document.addEventListener('DOMContentLoaded', () => {
         poems.forEach(poem => {
             poem.addEventListener('click', () => {
                 const index = parseInt(poem.getAttribute('data-index'), 10);
+                const theme = poem.getAttribute('data-theme');
+                const themes = [...document.getElementsByClassName("word-bubble")];
+                
+                themes.forEach(theme => {
+                    theme.classList.remove("selected-theme");
+                });
+
+                document.querySelector("div[theme="+theme+"]").classList.add("selected-theme");
+
                 swiper.slideTo(index, 500); // Aller au slide avec une transition
             });
         });
 
-        // Navigation aléatoire
+    // Navigation aléatoire
         document.getElementById('randomPoemButton').addEventListener('click', () => {
+            
             let randIndex = getRandomInt(0,parseInt(poems[poems.length-1].getAttribute("data-index")));
+            let theme = "";
             swiper.slideTo(randIndex, 500);
+
             sidebarTitles.forEach(item => {
                 item.classList.remove('sidebar-title-selected');
                 item.setAttribute('selected', 'false');
             });
+
             // Ajouter la classe sélectionnée au titre cliqué
             poems[randIndex].classList.add('sidebar-title-selected');
             poems[randIndex].setAttribute('selected', 'true');
             poems[randIndex].style.display = '';
 
-             // Défilement fluide vers le poème sélectionné
-             poems[randIndex].scrollIntoView({
+            theme = poems[randIndex].getAttribute("data-theme");
+
+            const themes = [...document.getElementsByClassName("word-bubble")];
+                
+            themes.forEach(theme => {
+                theme.classList.remove("selected-theme");
+            });
+
+            document.querySelector("div[theme="+theme+"]").classList.add("selected-theme");
+
+                // Défilement fluide vers le poème sélectionné
+            poems[randIndex].scrollIntoView({
                 behavior: 'smooth', // Défilement fluide
                 block: 'center', // Centrer le poème dans la vue
             });
@@ -492,7 +498,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     title.style.transition = 'transform 0.3s ease, color 0.3s ease'; // Ajoute une transition
                 });
 
-                // Retirer l'effet lorsque la souris quitte
+            // Retirer l'effet lorsque la souris quitte
                 title.addEventListener('mouseout', () => {
                     title.style.color = ''; // Restaure la couleur initiale
                 });

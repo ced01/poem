@@ -1,24 +1,24 @@
-html, body {
+html {
   margin: 0;
   padding: 0;
   height: 100%;
-  display: flex;
-  flex-direction: column; 
-  scroll-behavior: smooth;
+  
 }
 
 body {
-  width:100%;
+  margin: 0;
+  padding: 0;
   font-family: 'Arial', sans-serif;
-  background-color: #f8f5ec; 
   color: #333;
   background-image: url('/img/Libre-de-poemes.webp'); /* Chemin de votre image */
   background-size: cover; /* L'image occupe toute la fenêtre */
   background-repeat: no-repeat; /* Empêche la répétition de l'image */
   background-attachment: fixed; /* Garde l'image fixe lors du défilement */
   background-position: center; /* Centre l'image dans la fenêtre */
-  overflow-y: auto; /* Active le scrolling vertical global */
-  overflow-x: hidden; /* Empêche le scrolling horizontal */
+  display: flex;
+  flex-direction: column; 
+  scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body.loaded .poem-container {
@@ -72,13 +72,13 @@ h1 {
 }
 
 main {
-  flex: 1; /* Permet à main de prendre tout l'espace disponible */
-  /*display: flex;*/
-  justify-content: center;
-  align-items: center;
-  overflow-y: auto;
-  overflow-x: hidden;
-
+  display: flex; /* Affiche les enfants côte à côte */
+  flex-direction: row; /* Assure un alignement horizontal */
+  justify-content: space-between; /* Espace entre les éléments */
+  align-items: flex-start; /* Aligne les éléments au sommet */
+  margin: 2rem auto;
+  width: 90%;
+  max-width: 100%;
 }
 
 /* Header principal */
@@ -90,7 +90,7 @@ header {
   position: relative;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
   mask-image: linear-gradient(to top, transparent 5%, black 20%);
-  overflow: hidden; /* Cache l'animation en dehors du header */
+ 
 }
 
 /* Titre en style calligraphié */
@@ -525,21 +525,21 @@ header::after {
 }
 
 .poem-section {
-  width:75%;
-  margin-left: 12.5% !important;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 2rem 0;
+  flex: 3; /* Occupe plus d'espace */
+  text-align: -webkit-center;
+}
+
+.choose-theme {
+  flex: 1; /* Occupe moins d'espace */
+  padding: 5rem; /* Ajoute un espace intérieur */
+  z-index: 100;
 }
 
 /* Conteneur principal */
 #wordMapContainer {
   position: relative;
   height: 400px;
-  border-radius: 15px;
-  overflow: hidden;
-  /*box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);*/
+  width: 400px;
 }
 
 .word-bubble {
@@ -547,8 +547,8 @@ header::after {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 90px;
-  height: 90px;
+  width: 80px;
+  height: 80px;
   background: radial-gradient(circle, #ffffff, #ddd);
   border-radius: 50%;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
@@ -602,7 +602,7 @@ canvas {
   
 .poem-container {
   position: relative;
-  width: 50%;
+  width: 100%;
   max-width: 1200px;
   margin-bottom: 2rem;
   overflow: hidden;
@@ -754,19 +754,17 @@ canvas {
 }
 
 .swiper-container {
-  width: 80%;
+  width: 600px;
   height: auto;
-  padding: 2rem 0;
-}
-
-.swiper-wrapper {
-  text-align: -webkit-center;
 }
 
 .swiper-slide {
   opacity: 0; /* Commence par être invisible */
   transform: translateX(50px);
   transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+  max-width: 100%;
+  height: auto;
+  object-fit: cover;
 }
 
 .swiper-slide-active {
@@ -807,11 +805,11 @@ canvas {
 /* === Responsive Design === */
 
 /* Pour les tablettes */
-@media (max-width: 1545px) and (min-width:487) {
+@media (max-width: 1545px) and (min-width:487px) {
+
 
   .poem-section {
     width:52%;
-    margin-left: 24% !important;
   }
 
   .poem-container {
@@ -848,6 +846,11 @@ canvas {
 /* Pour les smartphones */
 @media (max-width: 487px) {
 
+
+  main{
+    flex-direction: column; /* Passer les éléments en pile verticale */
+  }
+
   #daily-quote {
     width: 50%;
     margin-left: 25%;
@@ -856,21 +859,11 @@ canvas {
   
   .poem-section {
     width:100%;
-    margin-left: 0%;
+    flex:unset;
   }
 
   header h1 {
     font-size: 1.5rem;
-  }
-
-  #sidebar.open {
-    width: 100%;
-    mask-image: linear-gradient(to left, transparent 5%, black 25%);
-  }
-  
-
-  #sidebar {
-    mask-image: linear-gradient(to top, transparent 5%, black 95%);
   }
 
   .burger-menu {
@@ -891,10 +884,6 @@ canvas {
   #sidebar.open .burger-menu { 
     top: 25px;
    
-  }
-
-  .toggled {
-    right: 319px !important;
   }
 
   header {
@@ -921,8 +910,12 @@ canvas {
     font-size: 0.9rem;
   }
 
-  #wordMapContainer {
-    display:none;
+  .swiper-container {
+    width: 100%;
+  }
+
+  .choose-theme {
+    display: none;
   }
 
 }
