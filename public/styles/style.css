@@ -24,6 +24,19 @@ body.loaded .poem-container {
   transform: translateY(0);
 }
 
+/* Classe de base */
+.hidden-element {
+  opacity: 1; /* Complètement visible */
+  visibility: visible; /* Élément visible */
+  transition: opacity 0.5s ease, visibility 0.5s ease; /* Transition fluide */
+}
+
+/* Classe pour masquer l'élément */
+.hidden-element.hide {
+  opacity: 0; /* Rendre invisible visuellement */
+  visibility: hidden; /* Cacher l'élément après l'animation */
+}
+
 h1 {
   margin: 0;
   font-size: 2.5rem;
@@ -118,13 +131,40 @@ header h1 {
   left: -300px;
   width: 300px;
   height: 100%;
-  background-color: #8B5E3C;
-  color: #fdf8f2;
-  box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.5);
+  background-color: #3a2e2e;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
   padding: 2rem;
   transition: all 0.5s ease;
+  overflow-y: auto;
   z-index: 1000;
-  overflow-y: hidden;
+}
+
+.sidebar::-webkit-scrollbar {
+  width: 1px; /* Largeur de la scrollbar */
+  border-radius: 1px; /* Arrondir les bords de la scrollbar */
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: #f8f5ec; /* Couleur douce pour l'arrière-plan de la scrollbar */
+  border-radius: 1px; /* Arrondir les bords de la piste */
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: #2C3E50; /* Couleur marron pour correspondre à l'esthétique générale */
+  border-radius: 1px; /* Coins arrondis pour un style cohérent */
+  border: 1px solid #f8f5ec; /* Ajouter un contour pour un effet contrasté */
+}
+
+/* Hover effect on the scrollbar thumb */
+.sidebar::-webkit-scrollbar-thumb:hover {
+  background: #ffd700; /* Accentuer la couleur au survol */
+}
+
+.sidebar:hover {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Accentuer l'ombre au survol */
+  border: 1px solid rgba(255, 255, 255, 0.2); /* Légèrement plus lumineuse */
 }
 
 /* Style pour la barre de défilement */
@@ -204,27 +244,28 @@ main::-webkit-scrollbar-thumb:hover {
 /* Style des champs de recherche */
 input[type="text"] {
   width: 60%;
-  padding: 10px 15px;
-  margin-bottom: 15px;
-  border: 1px solid #e1e6eb;
+  padding: 0.8rem;
+  margin-bottom: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 20px;
-  background: rgba(255, 255, 255, 0.9);
-  font-size: 14px;
-  font-family: 'Open Sans', sans-serif;
-  color: #5a4b3c;
+  background-color: rgba(255, 255, 255, 0.1);
+  font-size: 1.3rem;
+  font-family: 'Dancing Script', cursive;
+  color: #fff;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+  outline: none;
   transition: all 0.3s ease-in-out;
 }
 
 input[type="text"]::placeholder {
-  color: #b58863;
+  color: #fff;
   font-style: italic;
 }
 
 input[type="text"]:focus {
-  outline: none;
-  border-color: #ffd700;
-  box-shadow: 0 0 5px #ffd700;
-  background: #fff;
+  border: 1px solid #ffcc99; /* Accentuer avec une couleur thème */
+  background-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 8px rgba(255, 204, 153, 0.6);
 }
 
 .clear-title-button {
@@ -232,22 +273,22 @@ input[type="text"]:focus {
 }
 
 .clear-poem-button {
-  top: 78%;
+  top: 82%;
 }
 
 .clear-button {
   position: absolute;
-  right: 69px;
-  transform: translateY(-50%);
+  right: 110px;
+  transform: translateY(-100%);
   font-size: 1.2rem;
-  color: #8B5E3C;
+  color: #fff;
   cursor: pointer;
   font-weight: 900;
   display: none; /* Par défaut, la croix est cachée */
 }
 
 .clear-button:hover {
-  color: #2C3E50;
+  color: #ffcc99;
 }
 
 .sidebar.open {
@@ -309,6 +350,7 @@ input[type="text"]:focus {
   text-align: center;
   transition: all 0.3s ease-in-out;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  margin-bottom: 100px;
 }
 
 #randomPoemButton:hover {
@@ -514,33 +556,55 @@ header::after {
   font-size: 1.5rem;
   color: #2C3E50;
   cursor: pointer;
-  transition: transform 0.3s ease, z-index 0.3s ease, box-shadow 0.3s ease;
-  animation: float 8s infinite ease-in-out;
+  /*opacity: 0; /* Invisible avant l'animation d'introduction */
+  /*animation: combinedAnimation 4s forwards;*/
+  /*will-change: transform;*/
+}
+
+
+@keyframes combinedAnimation {
+  0% {
+    opacity: 0;
+    transform: translate(0, 30px);
+  }
+  50% {
+    transform: translate(5px, -5px); /* Expansion + Rotation */
+  }
+  100% {
+    opacity: 1;
+    transform: translate(0, 0); /* Final State */
+  }
+}
+
+.word-bubble span {
+  opacity: 0;
+  animation: textAppear 1.5s ease-out forwards;
+  animation-delay: 1s;
+}
+
+@keyframes textAppear {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 .selected-theme {
   box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
   background: radial-gradient(circle, #ffe6cc, #ffcc99);
+  transform: scale(1.2);
 }
 
 .word-bubble:hover {
-  transform: scale(1.1);
+  transform: scale(1.1) translate(0, 0);
   box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
   background: radial-gradient(circle, #ffe6cc, #ffcc99);
 }
 
 /* Animation des bulles pour leur donner un mouvement subtil */
-@keyframes float {
-  0% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-  100% {
-    transform: translateY(0);
-  }
-}
+
 
 
 @keyframes rotateParticles {
@@ -769,7 +833,7 @@ canvas {
     overflow: hidden; /* Désactiver le défilement */
     height: 100%; /* Fixer la hauteur */
   }
-  
+
   .poem-section {
     width:52%;
   }
@@ -889,4 +953,3 @@ canvas {
   }
 
 }
-

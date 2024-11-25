@@ -1,3 +1,24 @@
+function hideElement(element) {
+    // Ajouter la classe pour démarrer la transition
+    element.classList.add('hide');
+  
+    // Attendre que la transition se termine avant de cacher complètement (display: none)
+    setTimeout(() => {
+      element.style.display = 'none'; // Appliquer display: none après l'animation
+    }, 100); // Correspond au temps de transition défini dans le CSS
+  }
+  
+function showElement(element) {
+    // Réinitialiser display: none si nécessaire
+    element.style.display = '';
+  
+    // Forcer un reflow pour redémarrer les transitions CSS
+    void element.offsetWidth;
+  
+    // Retirer la classe qui masque l'élément
+    element.classList.remove('hide');
+}
+
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
@@ -62,6 +83,11 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById("sidebar").classList.toggle("closed");
     }
 
+    setTimeout(() => {
+        const wordMapContainer = document.getElementById('wordMapContainer');
+        wordMapContainer.classList.add('animate');
+      }, 500); 
+
     // Ajouter la classe "loaded" au body pour activer les animations
     document.body.classList.add("loaded");
 
@@ -82,6 +108,8 @@ document.addEventListener('DOMContentLoaded', () => {
         { text: "Un poème est un univers contenu dans une goutte d’encre.", author: "Marguerite Yourcenar" },
         { text: "La poésie est une émotion mise en mots.", author: "Emily Dickinson" }
     ];
+
+    let searchDone = false;
 
     const randomQuote = dailyQuotes[Math.floor(Math.random() * dailyQuotes.length)];
 
@@ -168,11 +196,11 @@ document.addEventListener('DOMContentLoaded', () => {
             breakpoints: { // Configuration spécifique aux tailles d'écran
                 768: {
                     slidesPerView: 1,
-                    spaceBetween: 20,
+                    spaceBetween: 1500,
                 },
                 1024: {
                     slidesPerView: 1,
-                    spaceBetween: 30,
+                    spaceBetween: 1500,
                 },
             },
             on: {
@@ -234,9 +262,11 @@ document.addEventListener('DOMContentLoaded', () => {
         // Générer les bulles de mots-clés
         keywords.forEach((word, index) => {
             const bubble = document.createElement('div');
+            const span = document.createElement('span');
             bubble.classList.add('word-bubble');
-            bubble.innerText = word;
-            bubble.setAttribute("theme",word);
+            span.innerText = word;
+            bubble.appendChild(span);
+            bubble.setAttribute("theme", word );
             
             if(positions.length != 0){
                  // Assigner une position prédéfinie (ou répéter les positions si trop de bulles)
@@ -341,6 +371,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     block: 'center', // Centrer le poème dans la vue
                 });
             }
+
+            showElement(document.getElementById('randomPoemButton'));
+            showElement(document.getElementsByClassName("choose-theme")[0]);
+            document.getElementById("searchPoemInput").removeAttribute("disabled");
+
         });
 
         clearPoemButton.addEventListener('click', () => {
@@ -359,6 +394,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     block: 'center', // Centrer le poème dans la vue
                 });
             }
+
+            showElement(document.getElementById('randomPoemButton'));
+            showElement(document.getElementsByClassName("choose-theme")[0]);
+            document.getElementById("searchTitleInput").removeAttribute("disabled");
+
         });
 
         // Fonction pour basculer la barre latérale
@@ -390,10 +430,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             }
         
-            if(query == ""){
+            if( query == "" ){
                 document.getElementById("searchPoemInput").removeAttribute("disabled");
+                showElement(document.getElementById('randomPoemButton'));
+                showElement(document.getElementsByClassName("choose-theme")[0]);
+            }else {
+                hideElement(document.getElementById('randomPoemButton'));
+                hideElement(document.getElementsByClassName("choose-theme")[0]);
             }
-            
+
 
         });
 
@@ -424,6 +469,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if(query == ""){
                 document.getElementById("searchTitleInput").removeAttribute("disabled");
+                showElement(document.getElementById('randomPoemButton'));
+                showElement(document.getElementsByClassName("choose-theme")[0]);
+            }else {
+                hideElement(document.getElementById('randomPoemButton'));
+                hideElement(document.getElementsByClassName("choose-theme")[0]);
             }
             
         });
@@ -465,46 +515,42 @@ document.addEventListener('DOMContentLoaded', () => {
         // Navigation aléatoire
         document.getElementById('randomPoemButton').addEventListener('click', () => {
             
-            if(!(document.getElementById("searchTitleInput").value !== "" || document.getElementById("searchPoemInput").value !== "")){
+            let randIndex = getRandomInt(0,parseInt(poems[poems.length-1].getAttribute("data-index")));
+            let theme = "";
+            swiper.slideTo(randIndex, 500);
 
-                let randIndex = getRandomInt(0,parseInt(poems[poems.length-1].getAttribute("data-index")));
-                let theme = "";
-                swiper.slideTo(randIndex, 500);
+            sidebarTitles.forEach(item => {
+                item.classList.remove('sidebar-title-selected');
+                item.setAttribute('selected', 'false');
+            });
 
-                sidebarTitles.forEach(item => {
-                    item.classList.remove('sidebar-title-selected');
-                    item.setAttribute('selected', 'false');
-                });
+            // Ajouter la classe sélectionnée au titre cliqué
+            poems[randIndex].classList.add('sidebar-title-selected');
+            poems[randIndex].setAttribute('selected', 'true');
+            poems[randIndex].style.display = '';
 
-                // Ajouter la classe sélectionnée au titre cliqué
-                poems[randIndex].classList.add('sidebar-title-selected');
-                poems[randIndex].setAttribute('selected', 'true');
-                poems[randIndex].style.display = '';
+            theme = poems[randIndex].getAttribute("data-theme");
 
-                theme = poems[randIndex].getAttribute("data-theme");
+            const themes = [...document.getElementsByClassName("word-bubble")];
+                
+            themes.forEach(theme => {
+                theme.classList.remove("selected-theme");
+            });
 
-                const themes = [...document.getElementsByClassName("word-bubble")];
-                    
-                themes.forEach(theme => {
-                    theme.classList.remove("selected-theme");
-                });
-
-                if(document.querySelector("div[theme="+theme+"]") !== null){
-                    document.querySelector("div[theme="+theme+"]").classList.add("selected-theme");
-                }
-
-                    // Défilement fluide vers le poème sélectionné
-                poems[randIndex].scrollIntoView({
-                    behavior: 'smooth', // Défilement fluide
-                    block: 'center', // Centrer le poème dans la vue
-                });
-
-                document.querySelector("main").scrollTo({
-                    top: 0,
-                    behavior: 'smooth' // Défilement fluide
-                });
+            if(document.querySelector("div[theme="+theme+"]") !== null){
+                document.querySelector("div[theme="+theme+"]").classList.add("selected-theme");
             }
 
+                // Défilement fluide vers le poème sélectionné
+            poems[randIndex].scrollIntoView({
+                behavior: 'smooth', // Défilement fluide
+                block: 'center', // Centrer le poème dans la vue
+            });
+
+            document.querySelector("main").scrollTo({
+                top: 0,
+                behavior: 'smooth' // Défilement fluide
+            });
         });
 
         // Gestion de la modale
@@ -533,7 +579,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     title.style.transition = 'transform 0.3s ease, color 0.3s ease'; // Ajoute une transition
                 });
 
-            // Retirer l'effet lorsque la souris quitte
+                // Retirer l'effet lorsque la souris quitte
                 title.addEventListener('mouseout', () => {
                     title.style.color = ''; // Restaure la couleur initiale
                 });
