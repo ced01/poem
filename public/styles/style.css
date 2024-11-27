@@ -1,4 +1,8 @@
-html {
+
+
+html, body {
+  overflow: hidden;
+  height: 100%; 
   margin: 0;
   padding: 0;
   height: 100%;
@@ -7,16 +11,11 @@ html {
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Arial', sans-serif;
-  color: #333;
   background-image: url('/img/Libre-de-poemes.webp'); /* Chemin de votre image */
   background-size: cover; /* L'image occupe toute la fenêtre */
   background-repeat: no-repeat; /* Empêche la répétition de l'image */
   background-position: center; /* Centre l'image dans la fenêtre */
-  display: flex;
-  flex-direction: column; 
-  scroll-behavior: smooth;
-  overflow-x: hidden;
+
 }
 
 body.loaded .poem-container {
@@ -43,13 +42,14 @@ h1 {
 }
 
 main {
-  display: flex; /* Affiche les enfants côte à côte */
-  flex-direction: row; /* Assure un alignement horizontal */
-  justify-content: space-between; /* Espace entre les éléments */
-  align-items: flex-start; /* Aligne les éléments au sommet */
-  margin: 2rem auto;
-  width: 90%;
-  max-width: 100%;
+
+  margin: auto;
+  overflow-x: hidden;
+  padding: 2%;
+}
+
+.d-flex {
+  height: -webkit-fill-available;
 }
 
 /* Header principal */
@@ -60,7 +60,7 @@ header {
   padding: 2rem;
   position: relative;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
-  mask-image: linear-gradient(to top, transparent 5%, black 20%);
+  /*mask-image: linear-gradient(to top, transparent 5%, black 20%);*/
  
 }
 
@@ -125,10 +125,9 @@ header h1 {
 }
 
 /* Barre latérale */
+
 .sidebar {
-  position: fixed;
-  top: 0;
-  left: -300px;
+  
   width: 300px;
   height: 100%;
   background-color: #3a2e2e;
@@ -137,8 +136,11 @@ header h1 {
   box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
   padding: 2rem;
   transition: all 0.5s ease;
-  overflow-y: auto;
-  z-index: 1000;
+  overflow: auto;
+}
+
+.sidebar.active {
+  transform: translateX(0);
 }
 
 .sidebar::-webkit-scrollbar {
@@ -243,7 +245,7 @@ main::-webkit-scrollbar-thumb:hover {
 
 /* Style des champs de recherche */
 input[type="text"] {
-  width: 60%;
+
   padding: 0.8rem;
   margin-bottom: 1rem;
   border: 1px solid rgba(255, 255, 255, 0.2);
@@ -322,14 +324,9 @@ input[type="text"]:focus {
   }
 }
 
-.sidebar.open > #poemList {
-  left: 0;
-  overflow-y: auto;
-}
-
 #poemList {
   height: 350px;
-  overflow-y: hidden;
+  overflow-y: auto;
 }
 
 .random-poem-button-container {
@@ -539,7 +536,6 @@ header::after {
 #wordMapContainer {
   position: relative;
   height: 400px;
-  width: 400px;
 }
 
 .word-bubble {
@@ -823,16 +819,18 @@ canvas {
   opacity: 1;
 }
 
+.modal-content {
+  width: 50% !important;
+  max-height: 75vh;
+  padding: 1rem;
+}
+
 
 /* === Responsive Design === */
 
 /* Pour les tablettes */
-@media (max-width: 1545px) and (min-width:487px) {
+@media (max-width: 1545px) {
 
-  html, body {
-    overflow: hidden; /* Désactiver le défilement */
-    height: 100%; /* Fixer la hauteur */
-  }
 
   .poem-section {
     width:52%;
@@ -869,56 +867,68 @@ canvas {
   
 }
 
+@media (max-width: 1024px) {
+
+  .sidebar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    transform: translateX(-300px);
+    z-index: 1000;
+  }
+
+  .sidebar.active {
+    transform: translateX(0);
+  }
+
+  .swiper-container {
+    width: 90%;
+    margin-left: 5%;
+  }
+
+  .modal-content {
+    width: 40%;
+    max-height: 75vh;
+    padding: 1rem;
+  }
+
+}
+
 /* Pour les smartphones */
-@media (max-width: 487px) {
+@media (max-width: 540px) {
 
-  html, body {
-    overflow: hidden; /* Désactiver le défilement */
-    height: 100%; /* Fixer la hauteur */
+  .sidebar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    transform: translateX(-300px);
+    z-index: 1000;
   }
 
-  main{
-    flex-direction: column; /* Passer les éléments en pile verticale */
+  #wordMapContainer {
+    width: 350px;
   }
 
-  body {
-    overflow:hidden;
+  .sidebar.active {
+    transform: translateX(0);
   }
 
   #daily-quote {
-    width: 50%;
-    margin-left: 25%;
     font-size: 1rem;
   }
   
-  .poem-section {
-    width:100%;
-    flex:unset;
-  }
-
   header h1 {
-    font-size: 1.5rem;
+    font-size: 1.7rem;
   }
 
-  .burger-menu {
-    right: 16px;
-    top: 5px;
-  }
 
   .burger-menu > img{
     width: 25px;
     height: 25px;
   }
 
-  #sidebar.open .burger-menu > img{ 
-    width: 50px;
-    height: 50px;
-  }
-
-  #sidebar.open .burger-menu { 
-    top: 25px;
-    right: 265px;
-  }
 
   header {
     padding: 0.5rem;
@@ -939,17 +949,14 @@ canvas {
   }
   
   .modal-content {
-    width: 90%;
+    width: 95% !important;
     max-height: 70vh;
     font-size: 0.9rem;
   }
 
   .swiper-container {
-    width: 100%;
-  }
-
-  .choose-theme {
-    display: none;
+    width: 90%;
+    margin-left: 5%;
   }
 
 }

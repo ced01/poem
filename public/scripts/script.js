@@ -78,11 +78,6 @@ function generatePositions(container, rows, cols) {
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    if(document.body.clientWidth <= 487){
-        document.getElementById("sidebar").classList.toggle("open");
-        document.getElementById("sidebar").classList.toggle("closed");
-    }
-
     setTimeout(() => {
         const wordMapContainer = document.getElementById('wordMapContainer');
         wordMapContainer.classList.add('animate');
@@ -401,12 +396,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         });
 
-        // Fonction pour basculer la barre latérale
-        toggleButton.addEventListener('click', () => {
-            sidebar.classList.toggle('open');
-            sidebar.classList.toggle('closed');
-            toggleButton.classList.toggle('active');
-            toggleButton.classList.toggle('toggled');
+
+        const burgerBtn = document.getElementById('burger-btn');
+    
+        burgerBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
         });
 
         // Fonction de recherche dans la barre latérale
