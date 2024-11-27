@@ -1,21 +1,9 @@
-
-
 html, body {
-  overflow: hidden;
   height: 100%; 
   margin: 0;
   padding: 0;
-  height: 100%;
 }
 
-body {
-
-  background-image: url('/img/Libre-de-poemes.webp'); /* Chemin de votre image */
-  background-size: cover; /* L'image occupe toute la fenêtre */
-  background-repeat: no-repeat; /* Empêche la répétition de l'image */
-  background-position: center; /* Centre l'image dans la fenêtre */
-
-}
 
 body.loaded .poem-container {
   opacity: 1;
@@ -41,10 +29,11 @@ h1 {
 }
 
 main {
-
-  margin: auto;
   overflow-x: hidden;
-  padding: 2%;
+  background-image: url('/img/Libre-de-poemes.webp'); /* Chemin de votre image */
+  background-size: cover; /* L'image occupe toute la fenêtre */
+  background-repeat: no-repeat; /* Empêche la répétition de l'image */
+  background-position: center; /* Centre l'image dans la fenêtre */
 }
 
 .d-flex {
@@ -745,6 +734,7 @@ canvas {
 .swiper-container {
   width: 600px;
   height: auto;
+  position: unset !important;
 }
 
 .swiper-slide {
