@@ -893,6 +893,10 @@ canvas {
     padding: 1rem;
   }
 
+  header {
+    height: 112px imo !important;
+  }
+
 }
 
 /* Pour les smartphones */
@@ -917,6 +921,10 @@ canvas {
 
   #daily-quote {
     font-size: 1rem;
+  }
+
+  header {
+    height: 112px imo !important;
   }
   
   header h1 {
