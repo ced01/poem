@@ -29,7 +29,11 @@ h1 {
 }
 
 main {
+  top:112px;
+  width: 100%;
+  position: relative;
   overflow-x: hidden;
+  padding: 2%;
   background-image: url('/img/Libre-de-poemes.webp'); /* Chemin de votre image */
   background-size: cover; /* L'image occupe toute la fenêtre */
   background-repeat: no-repeat; /* Empêche la répétition de l'image */
@@ -43,19 +47,22 @@ main {
 /* Header principal */
 header {
 
+  width:-webkit-fill-available;
+  height: 112px !important;
   background-color: #2C3E50; /* Marron foncé */
   color: #fdf8f2; /* Texte clair */
   text-align: center;
   padding: 2rem;
-  position: relative;
+  position: fixed;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
  
 }
 
 /* Titre en style calligraphié */
 header h1 {
   margin: 0;
-  font-size: 3.5rem; /* Texte plus grand pour plus d'impact */
+  font-size: 1.7rem; /* Texte plus grand pour plus d'impact */
   font-family: 'Dancing Script', cursive; /* Police calligraphique */
   font-weight: 700;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); /* Effet d'ombre élégante */
@@ -68,7 +75,7 @@ header h1 {
 #daily-quote {
   font-family: "Dancing Script", cursive; /* Utiliser une police élégante */
   font-style: italic;
-  font-size: 1.5rem; /* Taille discrète mais lisible */
+  font-size: 1.1rem; /* Taille discrète mais lisible */
   color: #ffd700; /* Couleur neutre et douce */
   text-align: center;
   margin-top: 10px; /* Espacement sous le titre */
@@ -125,10 +132,7 @@ header h1 {
   padding: 2rem;
   transition: all 0.5s ease;
   overflow: auto;
-}
-
-.sidebar.active {
-  transform: translateX(0);
+  top: 112px !important;
 }
 
 .sidebar::-webkit-scrollbar {
@@ -176,29 +180,6 @@ header h1 {
 
 /* Hover effect on the scrollbar thumb */
 #poemList::-webkit-scrollbar-thumb:hover {
-  background: #ffd700; /* Accentuer la couleur au survol */
-}
-
-
-/* Style pour la barre de défilement */
-main::-webkit-scrollbar {
-  width: 10px; /* Largeur de la scrollbar */
-  border-radius: 10px; /* Arrondir les bords de la scrollbar */
-}
-
-main::-webkit-scrollbar-track {
-  background: #f8f5ec; /* Couleur douce pour l'arrière-plan de la scrollbar */
-  border-radius: 10px; /* Arrondir les bords de la piste */
-}
-
-main::-webkit-scrollbar-thumb {
-  background: #2C3E50; /* Couleur marron pour correspondre à l'esthétique générale */
-  border-radius: 10px; /* Coins arrondis pour un style cohérent */
-  border: 1px solid #f8f5ec; /* Ajouter un contour pour un effet contrasté */
-}
-
-/* Hover effect on the scrollbar thumb */
-main::-webkit-scrollbar-thumb:hover {
   background: #ffd700; /* Accentuer la couleur au survol */
 }
 
@@ -281,17 +262,6 @@ input[type="text"]:focus {
   color: #ffcc99;
 }
 
-.sidebar.open {
-  animation: slideIn 0.5s ease forwards;
-}
-
-.sidebar.closed {
-  animation: slideOut 0.5s ease forwards;
-}
-
-.sidebar.closed .burger-menu{
-  right: 2px !important;
-}
 
 @keyframes slideIn {
   from {
@@ -788,9 +758,31 @@ canvas {
 
 
 /* === Responsive Design === */
+@media (min-width: 1546px) {
+  .sidebar {
+    top: 112px;
+    left: 0;
+    height: 100vh;
+    z-index: 1000;
+    position: relative;
+  }
 
+}
 /* Pour les tablettes */
 @media (max-width: 1545px) {
+
+  .sidebar {
+    top: 112px;
+    left: 0;
+    height: 100vh;
+    transform: translateX(-300px);
+    z-index: 1000;
+    position: absolute;
+  }
+
+  .sidebar.active {
+    transform: translateX(0);
+  }
 
 
   .poem-section {
@@ -831,12 +823,12 @@ canvas {
 @media (max-width: 1024px) {
 
   .sidebar {
-    position: absolute;
-    top: 0;
+    top: 112px;
     left: 0;
     height: 100vh;
     transform: translateX(-300px);
     z-index: 1000;
+    position: absolute;
   }
 
   .sidebar.active {
@@ -854,17 +846,12 @@ canvas {
     padding: 1rem;
   }
 
-  header {
-    height: 112px !important;
-  }
-
 }
 
 /* Pour les smartphones */
 @media (max-width: 540px) {
 
   .sidebar {
-    position: absolute;
     top: 0;
     left: 0;
     height: 100vh;
@@ -883,13 +870,9 @@ canvas {
   #daily-quote {
     font-size: 1rem;
   }
-
-  header {
-    height: 112px !important;
-  }
   
   header h1 {
-    font-size: 1.7rem;
+    font-size: 1.5rem;
   }
 
 
