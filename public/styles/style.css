@@ -62,7 +62,7 @@ header {
 /* Titre en style calligraphié */
 header h1 {
   margin: 0;
-  font-size: 1.7rem; /* Texte plus grand pour plus d'impact */
+  font-size: 2.7rem; /* Texte plus grand pour plus d'impact */
   font-family: 'Dancing Script', cursive; /* Police calligraphique */
   font-weight: 700;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); /* Effet d'ombre élégante */
@@ -132,7 +132,7 @@ header h1 {
   padding: 2rem;
   transition: all 0.5s ease;
   overflow: auto;
-  top: 112px !important;
+
 }
 
 .sidebar::-webkit-scrollbar {
@@ -767,23 +767,36 @@ canvas {
     position: relative;
   }
 
+  .slide-container {
+    text-align: -webkit-center;
+  }
+
+  #burger-btn {
+    display: none;
+  }
+
 }
 /* Pour les tablettes */
 @media (max-width: 1545px) {
 
   .sidebar {
-    top: 112px;
+
+    top: 0;
     left: 0;
     height: 100vh;
     transform: translateX(-300px);
     z-index: 1000;
-    position: absolute;
+    position: fixed;
+
+  }
+
+  .slide-container {
+    text-align: -webkit-right;
   }
 
   .sidebar.active {
     transform: translateX(0);
   }
-
 
   .poem-section {
     width:52%;
@@ -817,18 +830,22 @@ canvas {
     max-height: 75vh;
     padding: 1rem;
   }
+
+  #burger-btn {
+    display: none;
+  }
   
 }
 
 @media (max-width: 1024px) {
 
   .sidebar {
-    top: 112px;
+    top: 0px;
     left: 0;
     height: 100vh;
     transform: translateX(-300px);
     z-index: 1000;
-    position: absolute;
+    position: fixed;
   }
 
   .sidebar.active {
@@ -846,6 +863,10 @@ canvas {
     padding: 1rem;
   }
 
+  #burger-btn {
+    display: block;
+  }
+
 }
 
 /* Pour les smartphones */
@@ -857,6 +878,7 @@ canvas {
     height: 100vh;
     transform: translateX(-300px);
     z-index: 1000;
+    position: fixed;
   }
 
   #wordMapContainer {
@@ -910,5 +932,10 @@ canvas {
     width: 90%;
     margin-left: 5%;
   }
+
+  #burger-btn {
+    display: block;
+  }
+
 
 }
