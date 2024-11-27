@@ -9,8 +9,7 @@ html, body {
 }
 
 body {
-  margin: 0;
-  padding: 0;
+
   background-image: url('/img/Libre-de-poemes.webp'); /* Chemin de votre image */
   background-size: cover; /* L'image occupe toute la fenêtre */
   background-repeat: no-repeat; /* Empêche la répétition de l'image */
@@ -54,13 +53,13 @@ main {
 
 /* Header principal */
 header {
+
   background-color: #2C3E50; /* Marron foncé */
   color: #fdf8f2; /* Texte clair */
   text-align: center;
   padding: 2rem;
   position: relative;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
-  /*mask-image: linear-gradient(to top, transparent 5%, black 20%);*/
  
 }
 
@@ -490,26 +489,7 @@ input[type="text"]:focus {
   color: #fdf8f2;
 }
 
-/* Effet décoratif pour le header */
-header::before,
-header::after {
-  content: '';
-  position: absolute;
-  width: 150%;
-  height: 3px;
-  background: linear-gradient(90deg, rgba(195, 193, 191, 0.6), transparent);
-  animation: slideLine 3s infinite linear;
-}
 
-header::before {
-  top: 0;
-  left: -150%;
-}
-
-header::after {
-  bottom: 0;
-  right: -150%;
-}
 
 /* Animation des lignes décoratives */
 @keyframes slideLine {
@@ -524,12 +504,6 @@ header::after {
 .poem-section {
   flex: 3; /* Occupe plus d'espace */
   text-align: -webkit-center;
-}
-
-.choose-theme {
-  flex: 1; /* Occupe moins d'espace */
-  padding: 5rem; /* Ajoute un espace intérieur */
-  z-index: 100;
 }
 
 /* Conteneur principal */
@@ -552,9 +526,6 @@ header::after {
   font-size: 1.5rem;
   color: #2C3E50;
   cursor: pointer;
-  /*opacity: 0; /* Invisible avant l'animation d'introduction */
-  /*animation: combinedAnimation 4s forwards;*/
-  /*will-change: transform;*/
 }
 
 
@@ -894,7 +865,7 @@ canvas {
   }
 
   header {
-    height: 112px imo !important;
+    height: 112px !important;
   }
 
 }
@@ -924,7 +895,7 @@ canvas {
   }
 
   header {
-    height: 112px imo !important;
+    height: 112px !important;
   }
   
   header h1 {
