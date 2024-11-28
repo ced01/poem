@@ -84,6 +84,18 @@ header h1 {
   animation: citatiofadeIn 1.5s ease-in-out forwards;
 }
 
+.poem-text h2{
+  font-size: 1.5rem; /* Texte plus grand pour plus d'impact */
+  font-family: 'Dancing Script', cursive; /* Police calligraphique */
+  font-weight: 700;
+}
+
+.poem-text p {
+  font-size: 1.2rem; /* Texte plus grand pour plus d'impact */
+  font-family: 'Dancing Script', cursive; /* Police calligraphique */
+  font-weight: 300;
+}
+
 /* Animation de fondu */
 @keyframes citatiofadeIn {
   from {
@@ -246,12 +258,12 @@ input[type="text"]:focus {
 }
 
 .clear-poem-button {
-  top: 82%;
+  top: 81%;
 }
 
 .clear-button {
   position: absolute;
-  right: 110px;
+  right: 21px;
   transform: translateY(-100%);
   font-size: 1.2rem;
   color: #fff;
@@ -588,7 +600,7 @@ canvas {
   
 .poem-text {
   position: absolute;
-  bottom: 0;
+  bottom: 57px;
   left: 0;
   width: 100%;
   padding: 1rem;
@@ -601,7 +613,7 @@ canvas {
 }
   
 .poem-container:hover .poem-text {
-  transform: translateY(50%);
+  transform: translateY(85%);
 }
 
 .modal {

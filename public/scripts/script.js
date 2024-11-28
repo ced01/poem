@@ -368,7 +368,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             showElement(document.getElementById('randomPoemButton'));
-            showElement(document.getElementsByClassName("choose-theme")[0]);
             document.getElementById("searchPoemInput").removeAttribute("disabled");
 
         });
@@ -391,7 +390,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             showElement(document.getElementById('randomPoemButton'));
-            showElement(document.getElementsByClassName("choose-theme")[0]);
             document.getElementById("searchTitleInput").removeAttribute("disabled");
 
         });
