@@ -35,7 +35,7 @@ main {
   position: relative;
   overflow-x: hidden;
   padding: 2%;
-  background-image: url('/img/Libre-de-poemes.webp'); /* Chemin de votre image */
+  background-image: url('/img/background.webp'); /* Chemin de votre image */
   background-size: cover; /* L'image occupe toute la fenêtre */
   background-repeat: no-repeat; /* Empêche la répétition de l'image */
   background-position: center; /* Centre l'image dans la fenêtre */
@@ -906,7 +906,7 @@ canvas {
   }
 
   #burger-btn {
-    display: block;
+    position: inherit;
   }
 
 
