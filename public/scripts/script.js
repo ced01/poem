@@ -270,7 +270,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 bubble.style.top = `${position.y}px`;
         
                 // Ajouter un événement clic pour afficher les poèmes associés
-                bubble.addEventListener('click', () => {
+                bubble.addEventListener('click', (event) => {
+                    event.stopPropagation();
                     const bubbles = document.querySelectorAll(".word-bubble");
                     bubbles.forEach(bubble => bubble.classList.remove("selected-theme"));
             
