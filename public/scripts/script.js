@@ -399,6 +399,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
         burgerBtn.addEventListener('click', () => {
             sidebar.classList.toggle('active');
+            burgerBtn.classList.toggle('active');
         });
 
         // Fonction de recherche dans la barre latérale

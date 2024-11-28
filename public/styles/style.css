@@ -435,33 +435,41 @@ input[type="text"]:focus {
   }
 }
 
-/* Bouton burger */
-.burger-menu {
-  font-size: 2rem;
-  background: none;
-  border: none;
-  color: white;
-  cursor: pointer;
-  animation: zoomIn 3s ease-in-out;
-  transition: transform 0.3s ease;
+#burger-btn {
   position: absolute;
-  transition: all 0.5s ease;
-  z-index: 1;
-  transform-origin: center;
-}
-
-
-
-.burger-menu:hover {
+  right: 50px;
+  display: inline-block;
   cursor: pointer;
 }
 
-
-.burger-menu.active::before {
-  font-size: 2rem;
-  color: #fdf8f2;
+#logo-icon {
+  transition: transform 0.3s ease-in-out, filter 0.3s ease-in-out;
+}
+/* Animation lumineuse */
+#burger-btn::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.3s ease, width 0.5s ease, height 0.5s ease;
 }
 
+/* Quand l'utilisateur clique */
+#burger-btn.active #logo-icon {
+  transform: scale(1.1); /* Légère mise en avant */
+  filter: brightness(1.3); /* Accentuer la lumière */
+}
+
+#burger-btn.active::after {
+  width: 100px;
+  height: 100px;
+  opacity: 1;
+}
 
 
 /* Animation des lignes décoratives */
