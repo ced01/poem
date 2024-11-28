@@ -2,6 +2,7 @@ html, body {
   height: 100%; 
   margin: 0;
   padding: 0;
+  overflow:hidden;
 }
 
 
@@ -55,7 +56,7 @@ header {
   padding: 2rem;
   position: fixed;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
-  z-index: 1000;
+  z-index: 1;
  
 }
 
@@ -122,8 +123,8 @@ header h1 {
 /* Barre latérale */
 
 .sidebar {
-  
   width: 300px;
+  min-width: 300px;
   height: 100%;
   background-color: #3a2e2e;
   color: #fff;
@@ -131,6 +132,7 @@ header h1 {
   box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
   padding: 2rem;
   transition: all 0.5s ease;
+  z-index:1;
   overflow: auto;
 
 }
@@ -613,7 +615,7 @@ canvas {
   justify-content: center;
   align-items: center;
   animation: fadeIn 0.5s ease-in-out !important;
-  z-index: 1001;
+  z-index: 3;
   transition: opacity 0.3s ease, visibility 0.3s ease;
   background-size: cover; /* L'image occupe toute la fenêtre */
   background-repeat: no-repeat; /* Empêche la répétition de l'image */
@@ -702,7 +704,8 @@ canvas {
 }
 
 .swiper-container {
-  width: 600px;
+  margin-left: 25% !important;
+  width: 50% !important;
   height: auto;
   position: unset !important;
 }
@@ -758,73 +761,26 @@ canvas {
 
 
 /* === Responsive Design === */
-@media (min-width: 1546px) {
-  .sidebar {
-    top: 112px;
-    left: 0;
-    height: 100vh;
-    z-index: 1000;
-    position: relative;
-  }
-
-  .slide-container {
-    text-align: -webkit-center;
-  }
-
-  #burger-btn {
-    display: none;
-  }
-
-}
-/* Pour les tablettes */
-@media (max-width: 1545px) {
+@media (min-width: 1025px) {
 
   .sidebar {
-
-    top: 0;
-    left: 0;
+    top:0;
+    left:0;
     height: 100vh;
     transform: translateX(-300px);
-    z-index: 1000;
+    z-index: 1;
     position: fixed;
-
-  }
-
-  .slide-container {
-    text-align: -webkit-right;
   }
 
   .sidebar.active {
     transform: translateX(0);
   }
 
-  .poem-section {
-    width:52%;
+  .swiper-container {
+    width: 90%;
+    margin-left: 5%;
   }
 
-  .poem-container {
-    max-width: 90%;
-    margin: 0 auto;
-  }
-
-  .poem-text {
-    height: 600px;
-    font-size: 0.9rem;
-    padding: 0.8rem;
-  }
-
-  h1 {
-    font-size: 2rem;
-  }
-
-  .poem-text {
-    transform: translateY(87%);
-  }
-
-  .poem-container:hover .poem-text {
-    transform: translateY(59%);
-  }
-  
   .modal-content {
     width: 40%;
     max-height: 75vh;
@@ -832,19 +788,19 @@ canvas {
   }
 
   #burger-btn {
-    display: none;
+    display: block;
   }
-  
+
 }
 
 @media (max-width: 1024px) {
 
   .sidebar {
-    top: 0px;
-    left: 0;
+    top:0;
+    left:0;
     height: 100vh;
     transform: translateX(-300px);
-    z-index: 1000;
+    z-index: 1;
     position: fixed;
   }
 
@@ -872,13 +828,9 @@ canvas {
 /* Pour les smartphones */
 @media (max-width: 540px) {
 
-  .sidebar {
-    top: 0;
-    left: 0;
-    height: 100vh;
-    transform: translateX(-300px);
-    z-index: 1000;
-    position: fixed;
+  .swiper-container {
+    margin-left: 5% !important;
+    width: 90% !important;
   }
 
   #wordMapContainer {
