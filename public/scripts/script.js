@@ -313,6 +313,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
 
         // Éléments interactifs
+        const mainContainer = document.getElementsByClassName("main-container")[0];
         const toggleButton = document.getElementById('burger-menu');
         const sidebar = document.getElementById('sidebar');
         const searchTitleInput = document.getElementById('searchTitleInput');
@@ -400,6 +401,13 @@ document.addEventListener('DOMContentLoaded', () => {
         burgerBtn.addEventListener('click', () => {
             sidebar.classList.toggle('active');
             burgerBtn.classList.toggle('active');
+        });
+
+        mainContainer.addEventListener('click', () => {
+            if( sidebar.classList.contains("active")){
+                sidebar.classList.toggle('active');
+                burgerBtn.classList.toggle('active');
+            }
         });
 
         // Fonction de recherche dans la barre latérale
