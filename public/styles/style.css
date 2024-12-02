@@ -48,7 +48,7 @@ main {
 
 /* Header principal */
 header {
-
+  height: 112px;
   width:-webkit-fill-available;
   color: #fdf8f2; 
   padding: 1rem 2rem;
@@ -680,6 +680,7 @@ canvas {
   background-repeat: no-repeat; /* Empêche la répétition de l'image */
   background-attachment: fixed; /* Garde l'image fixe lors du défilement */
   background-position: center;
+  
 }
 
 .modal.show {
@@ -943,6 +944,7 @@ canvas {
 
   header {
     padding: 0.5rem;
+    height:112px;
   }
 
   h1 {
