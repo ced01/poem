@@ -134,7 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             li.classList.add("sidebar-title-link");
             li.setAttribute("selected", "false");
-            li.setAttribute("data-index", parseInt(allOptions[allOptions.length - 1].getAttribute("data-index")) + 1);
+            li.setAttribute("data-index", parseInt( allOptions.length != 0 ?  allOptions[allOptions.length - 1].getAttribute("data-index") : 0) + 1) ;
             li.setAttribute("data-theme", poem.theme );
             li.innerHTML = (poem.title == undefined || poem.title == "") ? "Pas de titre" : poem.title;
             
@@ -564,6 +564,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 let title = modalText.querySelector('h2');
                 const closestImage = findClosestImage(event.target);
                 const imgSrc = closestImage.src;
+
 
                 document.getElementsByClassName("modal")[0].style.backgroundImage = "url("+imgSrc+")";
 
