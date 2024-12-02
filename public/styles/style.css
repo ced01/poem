@@ -92,6 +92,31 @@ header h1 {
   padding: 0; 
 }
 
+#headerTabsContent{
+  overflow-y: auto;
+}
+
+#headerTabsContent::-webkit-scrollbar {
+  width: 1px; /* Largeur de la scrollbar */
+  border-radius: 1px; /* Arrondir les bords de la scrollbar */
+}
+
+#headerTabsContent::-webkit-scrollbar-track {
+  background: #f8f5ec; /* Couleur douce pour l'arrière-plan de la scrollbar */
+  border-radius: 1px; /* Arrondir les bords de la piste */
+}
+
+#headerTabsContent::-webkit-scrollbar-thumb {
+  background: #2C3E50; /* Couleur marron pour correspondre à l'esthétique générale */
+  border-radius: 1px; /* Coins arrondis pour un style cohérent */
+  border: 1px solid #f8f5ec; /* Ajouter un contour pour un effet contrasté */
+}
+
+/* Hover effect on the scrollbar thumb */
+#headerTabsContent::-webkit-scrollbar-thumb:hover {
+  background: #ffd700; /* Accentuer la couleur au survol */
+}
+
 .nav-tabs .nav-link {
   font-family: "Dancing Script", cursive;
   color: #ffffff;
