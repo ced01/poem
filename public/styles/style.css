@@ -360,7 +360,10 @@ input[type="text"]:focus {
 }
 
 .random-poem-button-container {
-  margin: 20px 0;
+  margin: 10px 0;
+  justify-content: center;
+  display: flex
+
 }
 /* Découverte aléatoire bouton */
 #randomPoemButton {
@@ -483,7 +486,7 @@ input[type="text"]:focus {
   align-items: center;
   font-family: 'Dancing Script', cursive;
   color: #2C3E50;
-  
+
 }
 
 .track-info {
@@ -1018,6 +1021,15 @@ canvas {
   .sidebar.active {
     transform: translateX(0);
   }
+
+  .track-info {
+    margin-bottom: -15px;
+  }
+
+  .controls {
+    margin: 0;
+  }
+  
 
   #daily-quote {
     font-size: 1rem;
