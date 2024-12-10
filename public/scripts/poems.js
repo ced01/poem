@@ -614,6 +614,122 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
 
+        const playBtn = document.querySelector('.play-btn');
+        const prevBtn = document.querySelector('.prev-btn');
+        const nextBtn = document.querySelector('.next-btn');
+        const progressBar = document.querySelector('.progress');
+        const trackTitle = document.querySelector('.track-title');
+        const audioPlayer = document.getElementById('audio-player');
+
+        playBtn.textContent = '\u23ef';
+        prevBtn.textContent ='\u23ee';
+        nextBtn.textContent = '\u23ed';
+
+        // Liste des pistes (titre, artiste, chemin du fichier)
+        const tracks = [
+            { title: "ADN Binaire", src: "ADN Binaire.mp3" },
+            { title: "Au Coeur des Tempêtes", src: "Au Coeur des Tempêtes.mp3" },
+            { title: "Au-delà des Frontières", src: "Au-delà des Frontières (Remastered).mp3" },
+            { title: "Bleu Étranger", src: "Bleu Étranger.mp3" },
+            { title: "Ce Rire, Cette Relique Enfouie", src: "Ce Rire, Cette Relique Enfouie.mp3" },
+            { title: "Dans l'espoir de l'oubli feint", src: "Dans l'espoir de l'oubli feint.mp3" },
+            { title: "Dessine-moi un rêve", src: "Dessine moi un rêve.mp3" },
+            { title: "Destructeur", src: "Destructeur.mp3" },
+            { title: "Étoiles et Rêves", src: "Étoiles et Rêves.mp3" },
+            { title: "Évasion", src: "Évasion.mp3" },
+            { title: "Honte à qui choisit cette voie", src: "Honte à qui choisit cette voie.mp3" },
+            { title: "L'Esprit Pervers", src: "L'Esprit Pervers.mp3" },
+            { title: "L'Éternité Infinie", src: "L'éternité Infinie.mp3" },
+            { title: "L'innocence retrouvée", src: "L'innocence retrouvée.mp3" },
+            { title: "La Gravité des Révolutions", src: "La Gravité des Révolutions.mp3" },
+            { title: "La Neige et Ses Flocons", src: "La Neige et Ses Flocons.mp3" },
+            { title: "La Quête de Simplicité", src: "La Quête de Simplicité.mp3" },
+            { title: "Les Rêves d'Autrefois", src: "Les Rêves d'Autrefois.mp3" },
+            { title: "Libération de l'étau", src: "Libération de l'étau.mp3" },
+            { title: "Lueur de ton Visage", src: "Lueur de ton Visage.mp3" },
+            { title: "Mes attentes d'automne", src: "Mes attentes d'automne.mp3" },
+            { title: "Nos Moments Perdus", src: "Nos Moments Perdus.mp3" },
+            { title: "Perdus ou Retrouvés", src: "Perdus ou Retrouvés.mp3" },
+            { title: "Plume du Souvenir", src: "Plume du Souvenir.mp3" },
+            { title: "Renaissance", src: "Renaissance.mp3" },
+            { title: "Renaître", src: "Renaître.mp3" },
+            { title: "Singularité", src: "Singularité.mp3" },
+            { title: "Sous l'éclat des sentiments", src: "Sous l'éclat des sentiments.mp3" },
+            { title: "Sous le Joug de Mon Esprit", src: "Sous le Joug de Mon Esprit.mp3" },
+            { title: "Souvenirs Doux", src: "Souvenirs Doux.mp3" },
+            { title: "Traversant Prière et Poussière", src: "Traversant Prière et Poussière.mp3" },
+            { title: "Trouve-Moi", src: "Trouve-Moi.mp3" },
+            { title: "Un Amour Suspendu", src: "Un Amour Suspendu.mp3" },
+            { title: "Un Univers Sensuel", src: "Un Univers Sensuel.mp3" },
+            { title: "Voix de Nuit", src: "Voix de Nuit.mp3" }
+        ];
+        
+
+        let currentTrackIndex = 0;
+
+        // Charger la première piste au démarrage
+        function loadTrack(index) {
+            const track = tracks[index];
+            trackTitle.textContent = track.title;
+            audioPlayer.src = "track/"+ track.src;
+        }
+
+        // Lecture ou pause
+        function togglePlay() {
+            if (audioPlayer.paused) {
+                audioPlayer.play();
+                playBtn.textContent = '\u23f8'; // Affiche le bouton pause
+            } else {
+                audioPlayer.pause();
+                playBtn.textContent = '\u23ef'; // Affiche le bouton play
+            }
+        }
+
+        // Passer à la piste suivante
+        function playNextTrack() {
+            currentTrackIndex = (currentTrackIndex + 1) % tracks.length; // Retour à 0 après la dernière piste
+            loadTrack(currentTrackIndex);
+            audioPlayer.play();
+            playBtn.textContent = '\u23f8'; // Affiche le bouton pause
+        }
+
+        // Revenir à la piste précédente
+        function playPrevTrack() {
+            currentTrackIndex = (currentTrackIndex - 1 + tracks.length) % tracks.length; // Aller à la dernière piste si on recule depuis la première
+            loadTrack(currentTrackIndex);
+            audioPlayer.play();
+            playBtn.textContent = '\u23f8'; // Affiche le bouton pause
+        }
+
+        // Mettre à jour la barre de progression
+        function updateProgress() {
+            const progressPercent = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+            progressBar.style.width = `${progressPercent}%`;
+        }
+
+        // Sauter à un point spécifique dans la piste
+        function setProgress(event) {
+            const progressContainer = document.querySelector('.progress-bar');
+            const clickX = event.offsetX;
+            const width = progressContainer.offsetWidth;
+            const newTime = (clickX / width) * audioPlayer.duration;
+            audioPlayer.currentTime = newTime;
+        }
+
+        // Ajouter des événements
+        playBtn.addEventListener('click', togglePlay);
+        nextBtn.addEventListener('click', playNextTrack);
+        prevBtn.addEventListener('click', playPrevTrack);
+        audioPlayer.addEventListener('timeupdate', updateProgress);
+        audioPlayer.addEventListener('ended', playNextTrack);
+
+        // Rendre la barre de progression interactive
+        document.querySelector('.progress-bar').addEventListener('click', setProgress);
+
+        // Charger la première piste
+        loadTrack(currentTrackIndex);
+
+
         // Fermer la modale
         modalClose.addEventListener('click', () => {
             modal.classList.remove('show');
