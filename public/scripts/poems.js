@@ -633,7 +633,7 @@ document.addEventListener('DOMContentLoaded', () => {
             { title: "Bleu Étranger", src: "Bleu Étranger.mp3" },
             { title: "Ce Rire, Cette Relique Enfouie", src: "Ce Rire, Cette Relique Enfouie.mp3" },
             { title: "Dans l'espoir de l'oubli feint", src: "Dans l'espoir de l'oubli feint.mp3" },
-            { title: "Dessine-moi un rêve", src: "Dessine moi un rêve.mp3" },
+            { title: "Dessine moi un rêve", src: "Dessine moi un rêve.mp3" },
             { title: "Destructeur", src: "Destructeur.mp3" },
             { title: "Étoiles et Rêves", src: "Étoiles et Rêves.mp3" },
             { title: "Évasion", src: "Évasion.mp3" },
