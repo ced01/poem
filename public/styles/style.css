@@ -981,6 +981,7 @@ canvas {
     transform: translateX(-300px);
     z-index: 1;
     position: fixed;
+    overflow: auto;
   }
 
   .sidebar.active {
