@@ -377,7 +377,6 @@ input[type="text"]:focus {
   text-align: center;
   transition: all 0.3s ease-in-out;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-  margin-bottom: 100px;
 }
 
 #randomPoemButton:hover {
@@ -474,9 +473,7 @@ input[type="text"]:focus {
 }
 
 .music-player {
-  bottom: 10px;
-  left: 20px;
-  width: 250px;
+  
   background: linear-gradient(to right, rgba(255, 223, 186, 0.9), rgba(255, 203, 107, 0.8));
   border-radius: 15px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -486,6 +483,7 @@ input[type="text"]:focus {
   align-items: center;
   font-family: 'Dancing Script', cursive;
   color: #2C3E50;
+  
 }
 
 .track-info {
