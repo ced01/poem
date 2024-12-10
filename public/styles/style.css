@@ -989,6 +989,10 @@ canvas {
     transform: translateX(0);
   }
 
+  #poemList {
+    height: 200px;
+  }
+
   .swiper-container {
     width: 90%;
     margin-left: 5%;
