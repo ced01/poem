@@ -474,7 +474,6 @@ input[type="text"]:focus {
 }
 
 .music-player {
-  position: fixed;
   bottom: 10px;
   left: 20px;
   width: 250px;
